@@ -1,4 +1,4 @@
-const { dest, series, src, parallel } = require("gulp");
+const { dest, series, src, parallel, watch } = require("gulp");
 const { createProject } = require("gulp-typescript");
 let tsProject = createProject("tsconfig.json");
 const browserify = require("browserify");
@@ -11,15 +11,13 @@ const cssmin = require('gulp-minify-css');
 const uglify = require('gulp-uglify');
 const buffer = require('vinyl-buffer');
 const sourcemaps = require('gulp-sourcemaps');
+const rename = require('gulp-rename');
+
+let debug = false;
 
 function cleanDir(cb) {
     return src(['dist/*', 'temp/*']).pipe(clean());
 }
-
-function copyHtml(cb) {
-    return src('src/index.html')
-        .pipe(dest("dist"));
-};
 
 function buildLess(cb) {
     return src('src/style.less')
@@ -31,7 +29,7 @@ function buildLess(cb) {
 function buildTs(cb) {
     return browserify({
         basedir: '.',
-        debug: false,
+        debug: debug,
         entries: ['src/main.ts'],
         cache: {},
         packageCache: {}
@@ -45,6 +43,22 @@ function buildTs(cb) {
         // .pipe(sourcemaps.write('./'))
         .pipe(dest("temp"));
 }
+
+// function buildTsDebug(cb) {
+//     return browserify({
+//         basedir: '.',
+//         debug: true,
+//         entries: ['src/main.ts'],
+//         cache: {},
+//         packageCache: {}
+//     })
+//         .plugin(tsify)
+//         .bundle()
+//         .pipe(source('bundle.js'))
+//         .pipe(buffer())
+//         .pipe(uglify())
+//         .pipe(dest("temp"));
+// }
 
 function collect(cb) {
     var target = src('./src/index.html');
@@ -61,7 +75,18 @@ function collect(cb) {
             return file.contents.toString('utf8');
         }
     }))
-        .pipe(dest('./dist'));
+        .pipe(rename('kabi-novel.html'))
+        .pipe(dest(debug?'temp':'dist'));
 }
 
-exports.default = series(cleanDir, parallel(buildTs, buildLess), collect);
+const task = series(cleanDir, parallel(buildTs, buildLess), collect);
+
+function setFlag(cb) {
+    debug = true;
+    watch('src', task);
+    task();
+    cb();
+}
+
+exports.default = task;
+exports.debug = setFlag;
