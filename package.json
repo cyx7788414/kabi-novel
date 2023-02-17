@@ -19,6 +19,7 @@
     "gulp-clean": "^0.4.0",
     "gulp-inject": "^5.0.5",
     "gulp-less": "^5.0.0",
+    "gulp-minify-css": "^1.2.4",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-typescript": "6.0.0-alpha.1",
     "gulp-uglify": "^3.0.2",

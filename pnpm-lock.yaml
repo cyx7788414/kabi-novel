@@ -10,6 +10,7 @@ specifiers:
   gulp-clean: ^0.4.0
   gulp-inject: ^5.0.5
   gulp-less: ^5.0.0
+  gulp-minify-css: ^1.2.4
   gulp-sourcemaps: ^3.0.0
   gulp-typescript: 6.0.0-alpha.1
   gulp-uglify: ^3.0.2
@@ -31,6 +32,7 @@ devDependencies:
   gulp-clean: registry.npmmirror.com/gulp-clean/0.4.0
   gulp-inject: registry.npmmirror.com/gulp-inject/5.0.5
   gulp-less: registry.npmmirror.com/gulp-less/5.0.0
+  gulp-minify-css: registry.npmmirror.com/gulp-minify-css/1.2.4
   gulp-sourcemaps: registry.npmmirror.com/gulp-sourcemaps/3.0.0
   gulp-typescript: registry.npmmirror.com/gulp-typescript/6.0.0-alpha.1_typescript@4.9.5
   gulp-uglify: registry.npmmirror.com/gulp-uglify/3.0.2
@@ -405,6 +407,13 @@ packages:
     version: 7.4.1
     engines: {node: '>=0.4.0'}
     hasBin: true
+    dev: true
+
+  registry.npmmirror.com/amdefine/1.0.1:
+    resolution: {integrity: sha512-S2Hw0TtNkMJhIabBwIojKL9YHO5T0n5eNqWJ7Lrlel/zDbftQpxpapi8tZs3X1HWa+u+QeydGmzzNU0m09+Rcg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/amdefine/-/amdefine-1.0.1.tgz}
+    name: amdefine
+    version: 1.0.1
+    engines: {node: '>=0.4.2'}
     dev: true
 
   registry.npmmirror.com/ansi-colors/1.1.0:
@@ -1595,6 +1604,15 @@ packages:
       ieee754: registry.npmmirror.com/ieee754/1.2.1
     dev: true
 
+  registry.npmmirror.com/bufferstreams/1.0.1:
+    resolution: {integrity: sha512-LZmiIfQprMLS6/k42w/PTc7awhU8AdNNcUerxTgr01WlP9agR2SgMv0wjlYYFD6eDOi8WvofrTX8RayjR/AeUQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/bufferstreams/-/bufferstreams-1.0.1.tgz}
+    name: bufferstreams
+    version: 1.0.1
+    engines: {node: '>= 0.10.0'}
+    dependencies:
+      readable-stream: registry.npmmirror.com/readable-stream/1.1.14
+    dev: true
+
   registry.npmmirror.com/builtin-status-codes/3.0.0:
     resolution: {integrity: sha512-HpGFw18DgFWlncDfjTa2rcQ4W88O1mC8e8yZ2AvQY5KDaktSTwo+KRf6nHK6FRI5FyRyb/5T6+TSxfP7QyGsmQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz}
     name: builtin-status-codes
@@ -1731,6 +1749,17 @@ packages:
       static-extend: registry.npmmirror.com/static-extend/0.1.2
     dev: true
 
+  registry.npmmirror.com/clean-css/3.4.28:
+    resolution: {integrity: sha512-aTWyttSdI2mYi07kWqHi24NUU9YlELFKGOAgFzZjDN1064DMAOy2FBuoyGmkKRlXkbpXd0EVHmiVkbKhKoirTw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/clean-css/-/clean-css-3.4.28.tgz}
+    name: clean-css
+    version: 3.4.28
+    engines: {node: '>=0.10.0'}
+    hasBin: true
+    dependencies:
+      commander: registry.npmmirror.com/commander/2.8.1
+      source-map: registry.npmmirror.com/source-map/0.4.4
+    dev: true
+
   registry.npmmirror.com/cliui/3.2.0:
     resolution: {integrity: sha512-0yayqDxWQbqk3ojkYqUKqaAQ6AfNKeKWRNA8kR0WXzAsdHpP4BIaOmMAG87JGuO6qcobyW4GjxHd9PmhEd+T9w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/cliui/-/cliui-3.2.0.tgz}
     name: cliui
@@ -1842,6 +1871,15 @@ packages:
       inline-source-map: registry.npmmirror.com/inline-source-map/0.6.2
       lodash.memoize: registry.npmmirror.com/lodash.memoize/3.0.4
       source-map: registry.npmmirror.com/source-map/0.5.7
+    dev: true
+
+  registry.npmmirror.com/commander/2.8.1:
+    resolution: {integrity: sha512-+pJLBFVk+9ZZdlAOB5WuIElVPPth47hILFkmGym57aq8kwxsowvByvB0DHs1vQAhyMZzdcpTtF0VDKGkSDR4ZQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/commander/-/commander-2.8.1.tgz}
+    name: commander
+    version: 2.8.1
+    engines: {node: '>= 0.6.x'}
+    dependencies:
+      graceful-readlink: registry.npmmirror.com/graceful-readlink/1.0.1
     dev: true
 
   registry.npmmirror.com/component-emitter/1.3.0:
@@ -2847,6 +2885,12 @@ packages:
     version: 4.2.10
     dev: true
 
+  registry.npmmirror.com/graceful-readlink/1.0.1:
+    resolution: {integrity: sha512-8tLu60LgxF6XpdbK8OW3FA+IfTNBn1ZHGHKF4KQbEeSkajYw5PlYJcKluntgegDPTg8UkHjpet1T82vk6TQ68w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz}
+    name: graceful-readlink
+    version: 1.0.1
+    dev: true
+
   registry.npmmirror.com/group-array/1.0.0:
     resolution: {integrity: sha512-PJresALe5TUzSIcdWKLdAKcdUDxv8du2EGueShgAL2xknbcTo5Bk1xbNaNhxpWxxAx/SV7N+5S0UyK7XV0+QhA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/group-array/-/group-array-1.0.0.tgz}
     name: group-array
@@ -2933,6 +2977,20 @@ packages:
       vinyl-sourcemaps-apply: registry.npmmirror.com/vinyl-sourcemaps-apply/0.2.1
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  registry.npmmirror.com/gulp-minify-css/1.2.4:
+    resolution: {integrity: sha512-byBqFQM/HrZoUVYihu/03iYH4m7U5TjSGhr6/7JvpMHh9+woewsCtEp6Noif2VXB+idDoM4ECd9sw+St+KFqsg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/gulp-minify-css/-/gulp-minify-css-1.2.4.tgz}
+    name: gulp-minify-css
+    version: 1.2.4
+    deprecated: Please use gulp-clean-css
+    dependencies:
+      clean-css: registry.npmmirror.com/clean-css/3.4.28
+      gulp-util: registry.npmmirror.com/gulp-util/3.0.8
+      object-assign: registry.npmmirror.com/object-assign/4.1.1
+      readable-stream: registry.npmmirror.com/readable-stream/2.3.7
+      vinyl-bufferstream: registry.npmmirror.com/vinyl-bufferstream/1.0.1
+      vinyl-sourcemaps-apply: registry.npmmirror.com/vinyl-sourcemaps-apply/0.2.1
     dev: true
 
   registry.npmmirror.com/gulp-sourcemaps/3.0.0:
@@ -5342,6 +5400,15 @@ packages:
     deprecated: See https://github.com/lydell/source-map-url#deprecated
     dev: true
 
+  registry.npmmirror.com/source-map/0.4.4:
+    resolution: {integrity: sha512-Y8nIfcb1s/7DcobUz1yOO1GSp7gyL+D9zLHDehT7iRESqGSxjJ448Sg7rvfgsRJCnKLdSl11uGf0s9X80cH0/A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/source-map/-/source-map-0.4.4.tgz}
+    name: source-map
+    version: 0.4.4
+    engines: {node: '>=0.8.0'}
+    dependencies:
+      amdefine: registry.npmmirror.com/amdefine/1.0.1
+    dev: true
+
   registry.npmmirror.com/source-map/0.5.7:
     resolution: {integrity: sha512-LbrmJOMUSdEVxIKvdcJzQC+nQhe8FUZQTXQy6+I75skNgn3OoQ0DZA8YnFa7gp8tqtL3KPf1kmo0R5DoApeSGQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/source-map/-/source-map-0.5.7.tgz}
     name: source-map
@@ -6021,6 +6088,14 @@ packages:
     dependencies:
       bl: registry.npmmirror.com/bl/1.2.3
       through2: registry.npmmirror.com/through2/2.0.5
+    dev: true
+
+  registry.npmmirror.com/vinyl-bufferstream/1.0.1:
+    resolution: {integrity: sha512-yCCIoTf26Q9SQ0L9cDSavSL7Nt6wgQw8TU1B/bb9b9Z4A3XTypXCGdc5BvXl4ObQvVY8JrDkFnWa/UqBqwM2IA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vinyl-bufferstream/-/vinyl-bufferstream-1.0.1.tgz}
+    name: vinyl-bufferstream
+    version: 1.0.1
+    dependencies:
+      bufferstreams: registry.npmmirror.com/bufferstreams/1.0.1
     dev: true
 
   registry.npmmirror.com/vinyl-fs/3.0.3:
