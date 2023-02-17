@@ -13,7 +13,7 @@ const buffer = require('vinyl-buffer');
 const sourcemaps = require('gulp-sourcemaps');
 
 function cleanDir(cb) {
-    return src(['dist', 'temp']).pipe(clean());
+    return src(['dist/*', 'temp/*']).pipe(clean());
 }
 
 function copyHtml(cb) {
