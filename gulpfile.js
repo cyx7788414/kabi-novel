@@ -1,6 +1,5 @@
 const { dest, series, src, parallel, watch } = require("gulp");
 const { createProject } = require("gulp-typescript");
-let tsProject = createProject("tsconfig.json");
 const browserify = require("browserify");
 const tsify = require("tsify");
 const source = require('vinyl-source-stream');
@@ -10,7 +9,6 @@ const less = require('gulp-less');
 const cssmin = require('gulp-minify-css');
 const uglify = require('gulp-uglify');
 const buffer = require('vinyl-buffer');
-const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
 
 let debug = false;
@@ -38,27 +36,9 @@ function buildTs(cb) {
         .bundle()
         .pipe(source('bundle.js'))
         .pipe(buffer())
-        // .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(uglify())
-        // .pipe(sourcemaps.write('./'))
         .pipe(dest("temp"));
 }
-
-// function buildTsDebug(cb) {
-//     return browserify({
-//         basedir: '.',
-//         debug: true,
-//         entries: ['src/main.ts'],
-//         cache: {},
-//         packageCache: {}
-//     })
-//         .plugin(tsify)
-//         .bundle()
-//         .pipe(source('bundle.js'))
-//         .pipe(buffer())
-//         .pipe(uglify())
-//         .pipe(dest("temp"));
-// }
 
 function collect(cb) {
     var target = src('./src/index.html');

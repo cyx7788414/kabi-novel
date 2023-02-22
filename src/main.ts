@@ -1,9 +1,13 @@
 import {modal} from './modal/modal';
 
+const pages: string[] = ['bookshelf', 'article', 'catalogue', 'config'];
 
-function hello(compiler: string) {
-    console.log(`Hello from ${compiler}`);
-    document.write('123');
-    modal(compiler);
+function pageSwitch() {
+    
+
 }
-hello("TypeScript");
+window.pageSwitch = pageSwitch;
+
+window.onerror = function(error) {
+    alert(error);
+}
