@@ -1,37 +1,62 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>kabi novel</title>
-        <!-- inject:css -->
-        <!-- endinject -->
-        <!-- inject:js -->
-        <!-- endinject -->
-    </head>
-    <body>
-        <div class="test-tool">
-            <button onclick="pageSwitch()">切换</button>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="
+        width=device-width,
+        initial-scale=1.0,
+        minimum-scale=1.0,
+        maximum-scale=1.0,
+        user-scalable=no">
+    <title>kabi novel</title>
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- inject:js -->
+    <!-- endinject -->
+</head>
+
+<body>
+    <div class="test-tool">
+        <button onclick="pageSwitch()">切换</button>
+    </div>
+    <div class="page bookshelf">
+        <div class="content">bookshelf</div>
+        <div class="bar"></div>
+        <div class="control">
+            <div class="button" onclick="jumpTo('config')">配置</div>
+            <div class="button">&lt;</div>
+            <div class="button">&gt;</div>
         </div>
-        <div class="page bookshelf">
-            <div class="content">bookshelf</div>
-            <div class="bar"></div>
-            <div class="control"></div>
+    </div>
+    <div class="page article show">
+        <div class="content">article</div>
+        <div class="bar"></div>
+        <div class="control">
+            <div class="button" onclick="jumpTo('bookshelf')">书架</div>
+            <div class="button" onclick="jumpTo('catalogue')">目录</div>
+            <div class="button">&lt;&lt;</div>
+            <div class="button">&gt;&gt;</div>
+            <div class="button">&lt;</div>
+            <div class="button" onclick="nextPage()">&gt;</div>
         </div>
-        <div class="page article show">
-            <div class="content">article</div>
-            <div class="bar"></div>
-            <div class="control">
-                <button></button>
-            </div>
+    </div>
+    <div class="page catalogue">
+        <div class="content">catalogue</div>
+        <div class="bar"></div>
+        <div class="control">
+            <div class="button" onclick="jumpTo('bookshelf')">书架</div>
+            <div class="button" onclick="jumpTo('article')">文章</div>
+            <div class="button">&lt;</div>
+            <div class="button">&gt;</div>
         </div>
-        <div class="page catalogue">
-            <div class="content">catalogue</div>
-            <div class="bar"></div>
-            <div class="control"></div>
+    </div>
+    <div class="page config">
+        <div class="content">config</div>
+        <div class="control">
+            <div class="button" onclick="jumpTo('bookshelf')">书架</div>
         </div>
-        <div class="page config">
-            <div class="content">config</div>
-            <div class="control"></div>
-        </div>
-    </body>
+    </div>
+</body>
+
 </html>

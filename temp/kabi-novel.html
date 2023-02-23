@@ -1,39 +1,64 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>kabi novel</title>
-        <!-- inject:css -->
-        <style>body,html{width:100%;height:100%;overflow:hidden;margin:0;padding:0;background-color:#fff;position:relative;font-size:14px}body .test-tool,html .test-tool{position:absolute;right:0;top:100px;background-color:#888;padding:10px;z-index:1}body .test-tool button,html .test-tool button{width:100px;height:100px}.page{width:100%;height:100%;display:none;position:relative}.page .bar,.page .control{position:absolute;width:100%}.page.show{display:block}.page .content{background-color:#aaa;height:100%;padding-bottom:230px;padding-top:40px}.page .bar{height:50px;background-color:#ccc;bottom:180px}.page .control{height:180px;background-color:#eee;bottom:0}</style>
-        <!-- endinject -->
-        <!-- inject:js -->
-        <script>!function t(o,i,u){function f(e,r){if(!i[e]){if(!o[e]){var n="function"==typeof require&&require;if(!r&&n)return n(e,!0);if(c)return c(e,!0);throw(r=new Error("Cannot find module '"+e+"'")).code="MODULE_NOT_FOUND",r}n=i[e]={exports:{}},o[e][0].call(n.exports,function(r){return f(o[e][1][r]||r)},n,n.exports,t,o,i,u)}return i[e].exports}for(var c="function"==typeof require&&require,r=0;r<u.length;r++)f(u[r]);return f}({1:[function(r,e,n){"use strict";Object.defineProperty(n,"__esModule",{value:!0});window.pageSwitch=function(){},window.onerror=function(r){alert(r)}},{}]},{},[1]);</script>
-        <!-- endinject -->
-    </head>
-    <body>
-        <div class="test-tool">
-            <button onclick="pageSwitch()">切换</button>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="
+        width=device-width,
+        initial-scale=1.0,
+        minimum-scale=1.0,
+        maximum-scale=1.0,
+        user-scalable=no">
+    <title>kabi novel</title>
+    <!-- inject:css -->
+    <style>body,html{width:100%;height:100%;overflow:hidden;margin:0;padding:0;background-color:#fff;position:relative;font-size:14px}body .test-tool,html .test-tool{position:absolute;right:0;top:100px;background-color:#888;padding:10px;z-index:1}body .test-tool button,html .test-tool button{width:100px;height:100px}.page{width:100%;height:100%;display:none;position:relative}.page .bar,.page .control{position:absolute;width:100%}.page.show{display:block}.page .content{background-color:#aaa;height:100%;padding-bottom:230px;padding-top:40px}.page .bar{height:50px;background-color:#ccc;bottom:180px}.page .control{height:180px;background-color:#eee;bottom:0;padding-top:20px}.page .control>.button{line-height:160px;height:100%;min-width:100px;padding:0 10px;font-size:60px;display:inline-block;border:1px solid #333;text-align:center}</style>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script>!function o(t,u,i){function c(n,e){if(!u[n]){if(!t[n]){var r="function"==typeof require&&require;if(!e&&r)return r(n,!0);if(f)return f(n,!0);throw(e=new Error("Cannot find module '"+n+"'")).code="MODULE_NOT_FOUND",e}r=u[n]={exports:{}},t[n][0].call(r.exports,function(e){return c(t[n][1][e]||e)},r,r.exports,o,t,u,i)}return u[n].exports}for(var f="function"==typeof require&&require,e=0;e<i.length;e++)c(i[e]);return c}({1:[function(e,n,r){"use strict";Object.defineProperty(r,"__esModule",{value:!0});function o(){document.querySelector(".article .content").innerHTML+="1"}window.pageSwitch=o,window.nextPage=o,window.jumpTo=function(e){var n;null!=(n=document.querySelector(".show"))&&n.classList.remove("show"),null!=(n=document.querySelector(".".concat(e)))&&n.classList.add("show")},window.onerror=function(e){},window.ondblclick=function(e){e.preventDefault()}},{}]},{},[1]);</script>
+    <!-- endinject -->
+</head>
+
+<body>
+    <div class="test-tool">
+        <button onclick="pageSwitch()">切换</button>
+    </div>
+    <div class="page bookshelf">
+        <div class="content">bookshelf</div>
+        <div class="bar"></div>
+        <div class="control">
+            <div class="button" onclick="jumpTo('config')">配置</div>
+            <div class="button">&lt;</div>
+            <div class="button">&gt;</div>
         </div>
-        <div class="page bookshelf">
-            <div class="content">bookshelf</div>
-            <div class="bar"></div>
-            <div class="control"></div>
+    </div>
+    <div class="page article show">
+        <div class="content">article</div>
+        <div class="bar"></div>
+        <div class="control">
+            <div class="button" onclick="jumpTo('bookshelf')">书架</div>
+            <div class="button" onclick="jumpTo('catalogue')">目录</div>
+            <div class="button">&lt;&lt;</div>
+            <div class="button">&gt;&gt;</div>
+            <div class="button">&lt;</div>
+            <div class="button" onclick="nextPage()">&gt;</div>
         </div>
-        <div class="page article show">
-            <div class="content">article</div>
-            <div class="bar"></div>
-            <div class="control">
-                <button></button>
-            </div>
+    </div>
+    <div class="page catalogue">
+        <div class="content">catalogue</div>
+        <div class="bar"></div>
+        <div class="control">
+            <div class="button" onclick="jumpTo('bookshelf')">书架</div>
+            <div class="button" onclick="jumpTo('article')">文章</div>
+            <div class="button">&lt;</div>
+            <div class="button">&gt;</div>
         </div>
-        <div class="page catalogue">
-            <div class="content">catalogue</div>
-            <div class="bar"></div>
-            <div class="control"></div>
+    </div>
+    <div class="page config">
+        <div class="content">config</div>
+        <div class="control">
+            <div class="button" onclick="jumpTo('bookshelf')">书架</div>
         </div>
-        <div class="page config">
-            <div class="content">config</div>
-            <div class="control"></div>
-        </div>
-    </body>
+    </div>
+</body>
+
 </html>
