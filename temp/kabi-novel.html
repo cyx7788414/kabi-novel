@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
 <html>
 
 <head>
@@ -11,27 +11,32 @@
         user-scalable=no">
     <title>kabi novel</title>
     <!-- inject:css -->
-    <style>body,html{width:100%;height:100%;overflow:hidden;margin:0;padding:0;background-color:#fff;position:relative;font-size:14px}body .test-tool,html .test-tool{position:absolute;right:0;top:100px;background-color:#888;padding:10px;z-index:1}body .test-tool button,html .test-tool button{width:100px;height:100px}.page{width:100%;height:100%;display:none;position:relative}.page .bar,.page .control{position:absolute;width:100%}.page.show{display:block}.page .content{background-color:#aaa;height:100%;padding-bottom:230px;padding-top:40px}.page .bar{height:50px;background-color:#ccc;bottom:180px}.page .control{height:180px;background-color:#eee;bottom:0;padding-top:20px}.page .control>.button{line-height:160px;height:100%;min-width:100px;padding:0 10px;font-size:60px;display:inline-block;border:1px solid #333;text-align:center}</style>
+    <style>body,html{width:100%;height:100%;overflow:hidden;margin:0;padding:0;background-color:#fff;position:relative;font-size:14px}body .test-tool,html .test-tool{position:absolute;right:0;top:100px;background-color:#888;padding:10px;z-index:1}body .test-tool button,html .test-tool button{width:100px;height:100px}.page{width:100%;height:100%;display:none;position:relative}.page .bar,.page .control{position:absolute;width:100%}.page.show{display:block}.page .content{height:100%;padding-bottom:230px;padding-top:40px}.page .bar{height:50px;background-color:#ccc;bottom:180px}.page .control{height:180px;background-color:#eee;bottom:0;padding-top:20px}.page .control .left-box{float:left}.page .control .right-box{float:right}.page .control .button{line-height:160px;height:100%;min-width:100px;padding:0 10px;font-size:60px;display:inline-block;border:1px solid #333;text-align:center;margin:0 20px}</style>
     <!-- endinject -->
     <!-- inject:js -->
-    <script>!function o(t,u,i){function c(n,e){if(!u[n]){if(!t[n]){var r="function"==typeof require&&require;if(!e&&r)return r(n,!0);if(f)return f(n,!0);throw(e=new Error("Cannot find module '"+n+"'")).code="MODULE_NOT_FOUND",e}r=u[n]={exports:{}},t[n][0].call(r.exports,function(e){return c(t[n][1][e]||e)},r,r.exports,o,t,u,i)}return u[n].exports}for(var f="function"==typeof require&&require,e=0;e<i.length;e++)c(i[e]);return c}({1:[function(e,n,r){"use strict";Object.defineProperty(r,"__esModule",{value:!0});function o(){document.querySelector(".article .content").innerHTML+="1"}window.pageSwitch=o,window.nextPage=o,window.jumpTo=function(e){var n;null!=(n=document.querySelector(".show"))&&n.classList.remove("show"),null!=(n=document.querySelector(".".concat(e)))&&n.classList.add("show")},window.onerror=function(e){},window.ondblclick=function(e){e.preventDefault()}},{}]},{},[1]);</script>
+    <script>!function o(r,u,i){function c(t,e){if(!u[t]){if(!r[t]){var n="function"==typeof require&&require;if(!e&&n)return n(t,!0);if(l)return l(t,!0);throw(e=new Error("Cannot find module '"+t+"'")).code="MODULE_NOT_FOUND",e}n=u[t]={exports:{}},r[t][0].call(n.exports,function(e){return c(r[t][1][e]||e)},n,n.exports,o,r,u,i)}return u[t].exports}for(var l="function"==typeof require&&require,e=0;e<i.length;e++)c(i[e]);return c}({1:[function(e,t,n){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.default=function(e){this.element=e}},{}],2:[function(e,t,n){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var o=e("../bar/bar");n.default=function(){this.element=document.querySelector(".page.bookshelf"),this.bar=new o.default(this.element.querySelector(".bar"))}},{"../bar/bar":1}],3:[function(e,t,n){"use strict";Object.defineProperty(n,"__esModule",{value:!0});var o=e("./bookshelf/bookshelf");function r(){document.querySelector(".article .content").innerHTML+="1"}window.pageSwitch=r,window.nextPage=r,window.jumpTo=function(e){var t;null!=(t=document.querySelector(".show"))&&t.classList.remove("show"),null!=(t=document.querySelector(".".concat(e)))&&t.classList.add("show")},window.init=function(){var e=new o.default;console.log(e)},window.onerror=function(e){},window.ondblclick=function(e){e.preventDefault()}},{"./bookshelf/bookshelf":2}]},{},[3]);</script>
     <!-- endinject -->
 </head>
 
-<body>
+<body onload="init()">
     <div class="test-tool">
         <button onclick="pageSwitch()">切换</button>
     </div>
-    <div class="page bookshelf">
+    <div class="page bookshelf show">
         <div class="content">bookshelf</div>
         <div class="bar"></div>
         <div class="control">
-            <div class="button" onclick="jumpTo('config')">配置</div>
-            <div class="button">&lt;</div>
-            <div class="button">&gt;</div>
+            <div class="left-box">
+                <div class="button" onclick="jumpTo('config')">配置</div>
+                <div class="button" onclick="">刷新</div>
+            </div>
+            <div class="right-box">
+                <div class="button">&lt;</div>
+                <div class="button">&gt;</div>
+            </div>
         </div>
     </div>
-    <div class="page article show">
+    <div class="page article">
         <div class="content">article</div>
         <div class="bar"></div>
         <div class="control">

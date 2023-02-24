@@ -3,6 +3,7 @@ declare global {
         pageSwitch?: Function;
         nextPage?: Function;
         jumpTo?: Function;
+        init?: Function;
     }
 }
 
