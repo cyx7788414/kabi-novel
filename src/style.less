@@ -80,3 +80,22 @@ html, body {
         }
     }
 }
+
+.config {
+    .form-item {
+        >div {
+            display: inline-block;
+        }
+        .label {
+            width: 33%;
+            text-align: right;
+            &::after {
+                content: "：";
+            }
+        }
+        .text {
+            width: 67%;
+        }
+
+    }
+}

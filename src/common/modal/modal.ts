@@ -1,4 +1,12 @@
-export function modal(name: string) {
-    document.write('456');
-    return `Hello from ${name}`;
+class Modal {
+    element: HTMLElement;
+    constructor() {
+        this.element = document.querySelector('.modal-box');
+    }
+
+    add() {
+
+    }
 }
+
+export default Modal;

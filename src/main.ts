@@ -1,4 +1,9 @@
 import BookShelf from './bookshelf/bookshelf';
+import Config from './config/config';
+import Router from './common/router/router';
+import Debugger from './common/debugger/debugger';
+import Modal from './common/modal/modal';
+import Message from './common/message/message';
 
 const pages: string[] = ['bookshelf', 'article', 'catalogue', 'config'];
 
@@ -15,8 +20,14 @@ function jumpTo(target: string) {
 
 
 function init() {
+    const message = new Message();
+    const modal = new Modal();
+    const debug = new Debugger();
+
+    const router = new Router();
     const bookshelf = new BookShelf();
     console.log(bookshelf);
+    const config = new Config();
 }
 
 window.pageSwitch = pageSwitch;

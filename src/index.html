@@ -20,7 +20,7 @@
     <div class="test-tool">
         <button onclick="pageSwitch()">切换</button>
     </div>
-    <div class="page bookshelf show">
+    <div class="page bookshelf">
         <div class="content">bookshelf</div>
         <div class="bar"></div>
         <div class="control">
@@ -57,11 +57,26 @@
         </div>
     </div>
     <div class="page config">
-        <div class="content">config</div>
+        <div class="content">
+            <div class="form-item">
+                <div class="label">服务器地址</div>
+                <div class="text">
+                    <input type="text" value="" placeholder="请输入阅读服务地址"/>
+                </div>
+            </div>
+        </div>
         <div class="control">
-            <div class="button" onclick="jumpTo('bookshelf')">书架</div>
+            <div class="left-box">
+                <div class="button" onclick="jumpTo('bookshelf')">书架</div>
+            </div>
+            <div class="right-box">
+                <div class="button" onclick="">保存</div>
+            </div>
         </div>
     </div>
+
+    <div class="modal-box"></div>
+    <div class="message-box"></div>
 </body>
 
 </html>
