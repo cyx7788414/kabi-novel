@@ -20,9 +20,10 @@ function jumpTo(target: string) {
 
 
 function init() {
+    const debug = new Debugger();
+    
     const message = new Message();
     const modal = new Modal();
-    const debug = new Debugger();
 
     const router = new Router();
     const bookshelf = new BookShelf();
