@@ -3,7 +3,8 @@ import { strToDom } from '../common';
 
 interface ModalOption {
     content: string | HTMLElement;
-
+    onOk?: Function;
+    onCancel?: Function;
 };
 
 class ModalItem {
@@ -20,11 +21,26 @@ class ModalItem {
                 </div>
             </div>
         `;
-        let modal = strToDom(str);
-        let div = document.createElement('div');
-        div.classList.add('modal');
-        // div.innerHTML = typeof option.content === 'string'?option;
-        window.modal.element.appendChild(div);
+        let modal: Element = strToDom(str)[0];
+        let content: HTMLDivElement = modal.querySelector('.modal-content');
+        let btnConfirm: HTMLButtonElement = modal.querySelector('.modal-confirm');
+        let btnCancel: HTMLButtonElement = modal.querySelector('.modal-cancel');
+
+        if (option.content === 'string') {
+            content.innerHTML = option.content;
+        } else {
+            content.append(option.content);
+        }
+
+        btnCancel.onclick = () => {
+            this.remove();
+        };
+
+        btnConfirm.onclick = () => {
+            this.remove();
+        };
+
+        window.Modal.element.appendChild(modal);
     }
 
     remove() {
@@ -37,15 +53,17 @@ class Modal {
     element: HTMLElement;
     list: ModalItem[];
     constructor() {
-        if (window.modal) {
+        if (window.Modal) {
             throw Error('modal has been inited');
         }
-        window.modal = this;
+        window.Modal = this;
         this.element = document.querySelector('.modal-box');
     }
 
-    add(content: string): ModalItem {
-        let item = new ModalItem(content);
+    add(content: string | HTMLElement): ModalItem {
+        let item = new ModalItem({
+            content: content
+        });
         this.list.push(item);
         return item;
     }
