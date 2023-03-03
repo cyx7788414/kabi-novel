@@ -21,10 +21,10 @@ function jumpTo(target: string) {
 
 function init() {
     const debug = new Debugger();
-    
+
     const message = new Message();
     const modal = new Modal();
-
+    modal.add({content: '123'});
     const router = new Router();
     const bookshelf = new BookShelf();
     console.log(bookshelf);
@@ -39,8 +39,7 @@ window.jumpTo = jumpTo;
 
 window.init = init;
 
-window.onerror = function(error) {
-}
+
 
 window.ondblclick = function(event: Event) {
     event.preventDefault();

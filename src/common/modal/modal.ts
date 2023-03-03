@@ -18,8 +18,8 @@ class ModalItem {
                 <div class="modal-content">
                 </div>
                 <div class="modal-footer">
-                    <button class="modal-confirm">确定</button>
-                    <button class="modal-cancel">取消</button>
+                    <div class="button modal-confirm">确定</div>
+                    <div class="button modal-cancel">取消</div>
                 </div>
             </div>
         `;
@@ -28,13 +28,11 @@ class ModalItem {
         let content: HTMLDivElement = modal.querySelector('.modal-content');
         let btnConfirm: HTMLButtonElement = modal.querySelector('.modal-confirm');
         let btnCancel: HTMLButtonElement = modal.querySelector('.modal-cancel');
-
-        if (option.content === 'string') {
+        if (typeof option.content === 'string') {
             content.innerHTML = option.content;
         } else {
-            content.append(option.content);
+            content.appendChild(option.content);
         }
-
         btnCancel.onclick = () => {
             option.onCancel && option.onCancel();
             this.remove();
@@ -47,7 +45,8 @@ class ModalItem {
     }
 
     remove() {
-        this.body.remove();
+        let parent = this.body.parentElement;
+        parent.removeChild(this.body);
     }
 };
 
@@ -59,6 +58,7 @@ class Modal {
         if (window.Modal) {
             throw Error('modal has been inited');
         }
+        this.list = [];
         window.Modal = this;
         this.element = document.querySelector('.modal-box');
     }

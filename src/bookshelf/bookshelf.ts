@@ -4,11 +4,11 @@ class BookShelf {
     element: HTMLElement;
     bar: Bar;
 
-    
+
 
     constructor() {
         this.element = document.querySelector('.page.bookshelf');
-        this.bar = new Bar(this.element.querySelector('.bar'));
+        // this.bar = new Bar(this.element.querySelector('.bar'));
     }
 };
 

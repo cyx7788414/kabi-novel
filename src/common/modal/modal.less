@@ -1,9 +1,29 @@
 .modal {
     position: absolute;
-    min-width: 200px;
-    min-height: 200px;
+    min-width: 600px;
+    min-height: 600px;
     left: 50%;
     top: 50%;
-    margin-left: -100px;
-    margin-top: -100px;
+    margin-left: -300px;
+    margin-top: -300px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+
+    .modal-content {
+        height: 500px;
+        padding: 10px;
+    }
+    .modal-footer {
+        height: 100px;
+        text-align: center;
+        border-top: 1px solid #ccc;
+        line-height: 100px;
+
+        .button {
+            height: 90px;
+            margin: 0 20px;
+            vertical-align: middle;
+            line-height: 90px;
+        }
+    }
 }
