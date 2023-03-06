@@ -22,10 +22,13 @@ function jumpTo(target: string) {
 function init() {
     const debug = new Debugger();
 
-    const message = new Message();
     const modal = new Modal();
     modal.add({content: '123'});
+    
+    const message = new Message();
+
     const router = new Router();
+
     const bookshelf = new BookShelf();
     console.log(bookshelf);
     const config = new Config();
