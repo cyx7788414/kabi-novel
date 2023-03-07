@@ -4,6 +4,9 @@ class Router {
         //     throw Error('router has been inited');
         // }
         // window.Router = this;
+        window.onhashchange = (event) => {
+            console.log(event);
+        }
     }
 }
 
