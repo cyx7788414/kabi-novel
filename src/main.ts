@@ -26,10 +26,11 @@ function init() {
 
     const modal = new Modal();
     modal.add({content: '123'});
+
+    const router = new Router(pages);
     
     const message = new Message();
 
-    const router = new Router();
 
     const bookshelf = new BookShelf();
     console.log(bookshelf);
