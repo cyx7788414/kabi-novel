@@ -13,8 +13,8 @@ function pageSwitch() {
 }
 
 function jumpTo(target: string) {
-    document.querySelector('.show')?.classList.remove('show');
-    document.querySelector(`.${target}`)?.classList.add('show');
+    // document.querySelector('.show')?.classList.remove('show');
+    // document.querySelector(`.${target}`)?.classList.add('show');
 
     window.location.hash = target;
 }

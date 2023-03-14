@@ -12,16 +12,33 @@ class Router {
 
         this.pages = pages;
 
-        window.onhashchange = (event) => {
-            console.log(event);
+        let func = (event?: HashChangeEvent) => {
             let hash = window.location.hash;
+            let index = hash.lastIndexOf('#');
+            if (index > -1) {
+                hash = hash.slice(index + 1);
+            }
+            if (this.pages.length === 0) {
+                return;
+            }
+            if (this.pages.indexOf(hash) === -1) {
+                window.location.hash = this.pages[0];
+                return;
+            }
 
-            // this.go(this.pages.indexOf(hash) > -1?hash:this.pages[0]);
-        }
+            this.switchPage(hash);
+        };
+        window.onhashchange = func;
+        func();
+    }
+
+    private switchPage(str: string) {
+        document.querySelector('.show')?.classList.remove('show');
+        document.querySelector(`.${str}`)?.classList.add('show');
     }
 
     go(target: string): void  {
-        // window.location.hash = target;
+        window.location.hash = target;
     }
 }
 
