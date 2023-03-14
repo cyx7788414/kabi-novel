@@ -25,9 +25,13 @@ function init() {
     const debug = new Debugger();
 
     const modal = new Modal();
-    modal.add({content: '123'});
+    // modal.add({content: '123'});
 
     const router = new Router(pages);
+
+
+    // const storage = new Storage
+
     
     const message = new Message();
 
