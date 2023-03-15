@@ -4,6 +4,7 @@ import Router from './common/router/router';
 import Debugger from './common/debugger/debugger';
 import Modal from './common/modal/modal';
 import Message from './common/message/message';
+import Store from './common/store/store';
 
 const pages: string[] = ['bookshelf', 'article', 'catalogue', 'config'];
 
@@ -25,12 +26,10 @@ function init() {
     const debug = new Debugger();
 
     const modal = new Modal();
-    // modal.add({content: '123'});
 
     const router = new Router(pages);
 
-
-    // const storage = new Storage
+    const store = new Store();
 
     
     const message = new Message();
