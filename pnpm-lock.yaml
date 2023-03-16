@@ -18,6 +18,7 @@ specifiers:
   gulp-uglify: ^3.0.2
   gulp-util: ^3.0.8
   less: ^4.1.3
+  lz-string: ^1.5.0
   tsify: ^5.0.4
   typescript: ^4.9.5
   vinyl-buffer: ^1.0.1
@@ -26,6 +27,7 @@ specifiers:
 
 dependencies:
   axios: registry.npmmirror.com/axios/1.3.4
+  lz-string: registry.npmmirror.com/lz-string/1.5.0
 
 devDependencies:
   '@babel/core': registry.npmmirror.com/@babel/core/7.20.12
@@ -4125,6 +4127,13 @@ packages:
     dependencies:
       es5-ext: registry.npmmirror.com/es5-ext/0.10.62
     dev: true
+
+  registry.npmmirror.com/lz-string/1.5.0:
+    resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lz-string/-/lz-string-1.5.0.tgz}
+    name: lz-string
+    version: 1.5.0
+    hasBin: true
+    dev: false
 
   registry.npmmirror.com/make-dir/2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/make-dir/-/make-dir-2.1.0.tgz}

@@ -5,6 +5,7 @@ import Debugger from './common/debugger/debugger';
 import Modal from './common/modal/modal';
 import Message from './common/message/message';
 import Store from './common/store/store';
+import Bind from './common/bind/bind';
 
 const pages: string[] = ['bookshelf', 'article', 'catalogue', 'config'];
 
@@ -25,11 +26,15 @@ function jumpTo(target: string) {
 function init() {
     const debug = new Debugger();
 
+    const bind = new Bind();
+
     const modal = new Modal();
 
     const router = new Router(pages);
 
     const store = new Store();
+    
+    const config = new Config();
 
     
     const message = new Message();
@@ -37,7 +42,6 @@ function init() {
 
     const bookshelf = new BookShelf();
     console.log(bookshelf);
-    const config = new Config();
 }
 
 window.pageSwitch = pageSwitch;
@@ -53,25 +57,3 @@ window.init = init;
 window.ondblclick = function(event: Event) {
     event.preventDefault();
 }
-
-
-// // 禁用双指放大
-// document.documentElement.addEventListener('touchstart', function (event) {
-//     // if (event.touches.length > 1) {
-//         event.preventDefault();
-//     // }
-// }, {
-//     passive: false
-// });
- 
-// // 禁用双击放大
-// // var lastTouchEnd = 0;
-// document.documentElement.addEventListener('touchend', function (event) {
-//     // var now = Date.now();
-//     // if (now - lastTouchEnd <= 300) {
-//         event.preventDefault();
-//     // }
-//     // lastTouchEnd = now;
-// }, {
-//     passive: false
-// });
