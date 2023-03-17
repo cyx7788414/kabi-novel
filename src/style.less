@@ -8,20 +8,6 @@ html, body {
     position: relative;
     font-size: 14px;
 
-    .test-tool {
-        position: absolute;
-        right:0;
-        top: 100px;
-        background-color: #888;
-        padding: 10px;
-        z-index: 1;
-
-        button {
-            width: 100px;
-            height: 100px;
-        }
-    }
-
     .button {
         min-width: 100px;
         padding: 0 10px;
@@ -29,6 +15,7 @@ html, body {
         display: inline-block;
         border: 1px solid #333;
         text-align: center;
+        justify-content: center;
     }
 }
 
@@ -92,9 +79,17 @@ html, body {
 
 .config {
     .content {
-        padding: 20px;
+        padding: 20px 40px;
         font-size: 30px;
         line-height: 40px;
+
+        .button {
+
+        }
+
+        .right {
+            float: right;
+        }
     }
     .form-item {
         padding: 10px 0;
@@ -105,6 +100,10 @@ html, body {
             &::after {
                 content: "：";
             }
+        }
+
+        .text {
+            line-height: 60px;
         }
 
     }

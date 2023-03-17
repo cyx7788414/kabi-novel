@@ -5,13 +5,7 @@ class Store {
 
     limit: number;
 
-    private _usage: number;
-    get usage(): number {
-        return this.usage;
-    }
-    set usage(num: number) {
-        this._usage = num;
-    }
+    usage: number;
 
     constructor() {
         if (window.Store) {
@@ -23,15 +17,25 @@ class Store {
     }
 
     checkUsage(): void {
-        this.usage = JSON.stringify(window.localStorage).length;
-    }
-
-    setLimit(limit: number): void {
-
+        this.usage = Object.keys(localStorage).map(v => v + localStorage.getItem(v)).join('').length;
     }
 
     checkLimit(): void {
+        let base = this.usage;
+        let addLength = 1000000;
+        let index = 0;
 
+        while (addLength > 10) {
+            try {
+                let key = `_test${index++}`;
+                localStorage.setItem(key, Array.from(new Array(addLength - key.length)).map(v => 'a').join(''));    
+                base += addLength;            
+            } catch(e) {
+                console.log(e);
+                addLength = Math.round(addLength / 2);
+            }
+        }
+        console.log(base);
     }
 };
 

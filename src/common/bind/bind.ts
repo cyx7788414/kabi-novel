@@ -1,39 +1,52 @@
 class Bind {
-    obj: any;
+    cbMap: any;
+    objIndex: number;
+    objMap: any;
 
     constructor() {
         if (window.Bind) {
             throw Error('bind has been inited');
         }
         window.Bind = this;
+        this.cbMap = {};
+        this.objIndex = 0;
+        this.objMap = {};
     }
 
-    getValue(target: string) {
-        let arr = target.split('.');
-        let value = window;
-        for (let i = 0; i < arr.length; i++) {
-            if (!value && value !== 0 && value !== '') {
-                value = value[arr[i]];
-            }
+    private handleObj(obj: any, prop: string) {
+        if (obj.hasOwnProperty('_bindId')) {
+            return;
         }
+        obj._bindId = this.objIndex++;
+        let index = '_' + 'prop';
+        obj[index] = obj[prop];
+        this.cbMap[obj._bindId + prop] = [];
+        Object.defineProperty(obj, prop, {
+            get: () => {
+                return obj[index];
+            },
+            set: (value: any) => {
+                let temp = obj[index];
+                obj[index] = value;
+                this.run(obj, prop, value, temp);
+            }
+        })
     }
 
-    bindView(element: HTMLElement, target: string) {
-        this.bind(target, (newV: any) => {
+    bindView(element: HTMLElement, obj: any, prop: string) {
+        this.bind(obj, prop, (newV: any) => {
             element.innerHTML = newV;
         }, true);
     }
 
-    bind(target: string, callback: Function, immediately?: boolean) {
-        if (!this.obj.target) {
-            this.obj[target] = [];
-        }
-        this.obj.target.push(callback);
-        immediately && callback();
+    bind(obj: any, prop: string, callback: Function, immediately?: boolean) {
+        this.handleObj(obj, prop);
+        this.cbMap[obj._bindId + prop].push(callback);
+        immediately && callback(obj[prop]);
     }
 
-    run(target: string, newV?: any, oldV?: any) {
-        this.obj[target].forEach((callback: Function) => {
+    run(obj: any, prop: string, newV?: any, oldV?: any) {
+        this.cbMap[obj._bindId + prop].forEach((callback: Function) => {
             try {
                 callback(newV, oldV);
             } catch (error) {
