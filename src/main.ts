@@ -29,6 +29,7 @@ function init() {
     const bind = new Bind();
 
     const modal = new Modal();
+    const message = new Message();
 
     const router = new Router(pages);
 
@@ -37,7 +38,6 @@ function init() {
     const config = new Config();
 
     
-    const message = new Message();
 
 
     const bookshelf = new BookShelf();

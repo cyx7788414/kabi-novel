@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="
+        width=device-width,
+        initial-scale=1.0,
+        minimum-scale=1.0,
+        maximum-scale=1.0,
+        user-scalable=no">
+    <title>kabi novel</title>
+    <!-- inject:css -->
+    <style>.page,body,html{position:relative;height:100%;width:100%}body,html{overflow:hidden;margin:0;padding:0;background-color:#fff;font-size:14px}body .button,html .button{min-width:100px;padding:0 10px;font-size:60px;display:inline-block;border:1px solid #333;text-align:center;justify-content:center}.page{display:none}.page.show{display:block}.page .content{height:100%;padding-bottom:230px;padding-top:40px}.page .bar{height:50px;background-color:#ccc;position:absolute;bottom:180px;width:100%}.page .control{height:180px;background-color:#eee;position:absolute;bottom:0;width:100%;padding-top:20px}.page .control .left-box{float:left}.config .content .right,.page .control .right-box{float:right}.page .control .button{line-height:160px;height:100%;margin:0 20px}.config .content{padding:20px 40px;font-size:30px;line-height:40px}.config .form-item{padding:10px 0}.config .form-item .label::after{content:"："}.config .form-item .text{line-height:60px}.modal-box .modal{position:absolute;min-width:600px;min-height:600px;left:50%;top:50%;margin-left:-300px;margin-top:-300px;border:1px solid #ccc;background-color:#fff}.modal-box .modal .modal-content{height:500px;padding:10px}.modal-box .modal .modal-footer{height:100px;text-align:center;border-top:1px solid #ccc;line-height:100px}.modal-box .modal .modal-footer .button{height:90px;margin:0 20px;vertical-align:middle;line-height:90px}.message-box{position:fixed;top:0;left:0;right:0}</style>
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script>!function n(i,r,c){function s(t,e){if(!r[t]){if(!i[t]){var o="function"==typeof require&&require;if(!e&&o)return o(t,!0);if(d)return d(t,!0);throw(e=new Error("Cannot find module '"+t+"'")).code="MODULE_NOT_FOUND",e}o=r[t]={exports:{}},i[t][0].call(o.exports,function(e){return s(i[t][1][e]||e)},o,o.exports,n,i,r,c)}return r[t].exports}for(var d="function"==typeof require&&require,e=0;e<c.length;e++)s(c[e]);return s}({1:[function(e,t,o){"use strict";Object.defineProperty(o,"__esModule",{value:!0}),o.default=function(){this.element=document.querySelector(".page.bookshelf")}},{}],2:[function(e,t,o){"use strict";function n(){if(window.Bind)throw Error("bind has been inited");(window.Bind=this).cbMap={},this.objIndex=0,this.objMap={}}Object.defineProperty(o,"__esModule",{value:!0}),n.prototype.handleObj=function(o,n){var i,r=this;o.hasOwnProperty("_bindId")||(o._bindId=this.objIndex++),this.cbMap[o._bindId+n]||(o[i="_prop"]=o[n],this.cbMap[o._bindId+n]=[],Object.defineProperty(o,n,{get:function(){return o[i]},set:function(e){var t=o[i];o[i]=e,r.run(o,n,e,t)}}))},n.prototype.bindView=function(t,e,o){this.bind(e,o,function(e){t.innerHTML=e},!0)},n.prototype.bind=function(e,t,o,n){this.handleObj(e,t),this.cbMap[e._bindId+t].push(o),n&&o(e[t])},n.prototype.run=function(e,t,o,n){this.cbMap[e._bindId+t].forEach(function(e){try{e(o,n)}catch(e){throw e}})},o.default=n},{}],3:[function(e,t,o){"use strict";Object.defineProperty(o,"__esModule",{value:!0}),o.strToDom=void 0,o.strToDom=function(e){var t=document.createElement("div");return t.innerHTML=e,t.children}},{}],4:[function(e,t,o){"use strict";Object.defineProperty(o,"__esModule",{value:!0}),o.default=function(){window.onerror=function(e){console.error(e),window.Modal&&window.Modal.add({content:e.toString()})}}},{}],5:[function(e,t,o){"use strict";Object.defineProperty(o,"__esModule",{value:!0});var n=e("../common"),i=(r.prototype.remove=function(){this.body.parentElement.removeChild(this.body)},r);function r(e){var t=this,o=(0,n.strToDom)('\n            <div class="message">\n                <div class="message-content">\n                </div>\n            </div>\n        ')[0],o=(this.body=o).querySelector(".message-content");o.innerHTML=e.content,o.onclick=function(){e.onOk&&e.onOk(),t.remove()}}function c(){if(window.Message)throw Error("modal has been inited");this.list=[],(window.Message=this).element=document.querySelector(".message-box")}c.prototype.add=function(e){e=new i(e);return this.list.push(e),this.element.appendChild(e.body),e},c.prototype.remove=function(e){e.remove();e=this.list.indexOf(e);this.list.splice(e,1)},c.prototype.clear=function(){this.list=[],this.element.innerHTML=""},o.default=c},{"../common":3}],6:[function(e,t,o){"use strict";Object.defineProperty(o,"__esModule",{value:!0});var r=e("../common"),n=(i.prototype.remove=function(){this.body.parentElement.removeChild(this.body)},i);function i(e){var t=this,o=(this.zIndex=e.zIndex,'\n            <div class="modal" style="z-index: '.concat(this.zIndex,';">\n                <div class="modal-content">\n                </div>\n                <div class="modal-footer">\n                    <div class="button modal-confirm">确定</div>\n                    <div class="button modal-cancel">取消</div>\n                </div>\n            </div>\n        ')),o=(0,r.strToDom)(o)[0],n=(this.body=o).querySelector(".modal-content"),i=o.querySelector(".modal-confirm"),o=o.querySelector(".modal-cancel");"string"==typeof e.content?n.innerHTML=e.content:n.appendChild(e.content),o.onclick=function(){e.onCancel&&e.onCancel(),t.remove()},i.onclick=function(){e.onOk&&e.onOk(),t.remove()}}function c(){if(window.Modal)throw Error("modal has been inited");this.list=[],(window.Modal=this).element=document.querySelector(".modal-box")}c.prototype.add=function(e){"zIndex"in e||(t=this.list.length,e.zIndex=(t?this.list[t-1].zIndex:100)+1);var t=new n(e);return this.list.push(t),this.element.appendChild(t.body),t},c.prototype.remove=function(e){e.remove();e=this.list.indexOf(e);this.list.splice(e,1)},c.prototype.clear=function(){this.list=[],this.element.innerHTML=""},o.default=c},{"../common":3}],7:[function(e,t,o){"use strict";function n(e){var n=this;if(window.Router)throw Error("router has been inited");(window.Router=this).pages=e;function t(e){var t=window.location.hash,o=t.lastIndexOf("#");-1<o&&(t=t.slice(o+1)),0!==n.pages.length&&(-1===n.pages.indexOf(t)?window.location.hash=n.pages[0]:n.switchPage(t))}(window.onhashchange=t)()}Object.defineProperty(o,"__esModule",{value:!0}),n.prototype.switchPage=function(e){var t;null!=(t=document.querySelector(".show"))&&t.classList.remove("show"),null!=(t=document.querySelector(".".concat(e)))&&t.classList.add("show")},n.prototype.go=function(e){window.location.hash=e},o.default=n},{}],8:[function(e,t,o){"use strict";function n(){if(window.Store)throw Error("store has been inited");(window.Store=this).limit=0,this.usage=0,this.checkUsage()}Object.defineProperty(o,"__esModule",{value:!0}),n.prototype.set=function(e,t,o){try{localStorage.setItem(e,t),this.checkUsage(),o&&o.success&&o.success()}catch(e){o&&o.fail&&o.fail()}},n.prototype.get=function(e){return localStorage.getItem(e)},n.prototype.checkUsage=function(){this.usage=Object.keys(localStorage).map(function(e){return e+localStorage.getItem(e)}).join("").length},n.prototype.checkLimit=function(){if(window.Message.add({content:"正在检测缓存容量"}),!this.limitChecking){this.limitChecking=!0;for(var e=this.usage,t=1e6,o=0;2<t;)try{var n="_test".concat(o++);localStorage.setItem(n,new Array(t-n.length+1).join("a")),e+=t}catch(e){console.log(e),o--,t=Math.round(t/2)}this.limit=e,Object.keys(localStorage).filter(function(e){return 0===e.indexOf("_test")}).forEach(function(e){return localStorage.removeItem(e)}),this.limitChecking=!1,window.Message.add({content:"检测完成"})}},o.default=n},{}],9:[function(e,t,o){"use strict";function n(){this.element=document.querySelector(".page.config"),this.loadingMap={},window.Bind.bindView(this.element.querySelector(".store-usage"),window.Store,"usage"),window.Bind.bindView(this.element.querySelector(".store-total"),window.Store,"limit")}Object.defineProperty(o,"__esModule",{value:!0}),n.prototype.checkStore=function(){this.loadingMap.checkStore=!0,window.Store.checkLimit()},o.default=n},{}],10:[function(e,t,o){"use strict";Object.defineProperty(o,"__esModule",{value:!0});var n=e("./bookshelf/bookshelf"),i=e("./config/config"),r=e("./common/router/router"),c=e("./common/debugger/debugger"),s=e("./common/modal/modal"),d=e("./common/message/message"),a=e("./common/store/store"),l=e("./common/bind/bind"),u=["bookshelf","article","catalogue","config"];function f(){document.querySelector(".article .content").innerHTML+="1"}window.pageSwitch=f,window.nextPage=f,window.jumpTo=function(e){window.location.hash=e},window.init=function(){new c.default,new l.default,new s.default,new d.default,new r.default(u),new a.default,new i.default;var e=new n.default;console.log(e)},window.ondblclick=function(e){e.preventDefault()}},{"./bookshelf/bookshelf":1,"./common/bind/bind":2,"./common/debugger/debugger":4,"./common/message/message":5,"./common/modal/modal":6,"./common/router/router":7,"./common/store/store":8,"./config/config":9}]},{},[10]);</script>
+    <!-- endinject -->
+</head>
+
+<body onload="init()">
+    <div class="page bookshelf show">
+        <div class="content">bookshelf</div>
+        <div class="bar"></div>
+        <div class="control">
+            <div class="left-box">
+                <div class="button" onclick="Router.go('config')">配置</div>
+                <div class="button" onclick="">刷新</div>
+            </div>
+            <div class="right-box">
+                <div class="button">&lt;</div>
+                <div class="button">&gt;</div>
+            </div>
+        </div>
+    </div>
+    <div class="page article">
+        <div class="content">article</div>
+        <div class="bar"></div>
+        <div class="control">
+            <div class="button" onclick="Router.go('bookshelf')">书架</div>
+            <div class="button" onclick="Router.go('catalogue')">目录</div>
+            <div class="button">&lt;&lt;</div>
+            <div class="button">&gt;&gt;</div>
+            <div class="button">&lt;</div>
+            <div class="button" onclick="nextPage()">&gt;</div>
+        </div>
+    </div>
+    <div class="page catalogue">
+        <div class="content">catalogue</div>
+        <div class="bar"></div>
+        <div class="control">
+            <div class="button" onclick="Router.go('bookshelf')">书架</div>
+            <div class="button" onclick="Router.go('article')">文章</div>
+            <div class="button">&lt;</div>
+            <div class="button">&gt;</div>
+        </div>
+    </div>
+    <div class="page config">
+        <div class="content">
+            <div class="form-item">
+                <div class="label">服务器地址</div>
+                <div class="text">
+                    <input type="text" value="" placeholder="请输入阅读服务地址"/>
+                    <div class="button right">测试</div>
+                </div>
+            </div>
+            <div class="form-item">
+                <div class="label">缓存容量</div>
+                <div class="text">
+                    <span class="store-usage">-</span>
+                    <span class="store-division">/</span>
+                    <span class="store-total">-</span>
+                    <span class="store-percent"></span>
+                    <div class="button right" onclick="Store.checkLimit()">检测</div>
+                </div>
+            </div>
+            <div class="form-item">
+                <div class="label">字号</div>
+                <div class="text">
+                    <input type="text" value="" placeholder="请输入阅读服务地址"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div class="label">行距</div>
+                <div class="text">
+                    <input type="text" value="" placeholder="请输入阅读服务地址"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div class="label">效果展示</div>
+                <div class="text">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="control">
+            <div class="left-box">
+                <div class="button" onclick="Router.go('bookshelf')">书架</div>
+            </div>
+            <div class="right-box">
+                <div class="button" onclick="">保存</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-box"></div>
+    <div class="message-box"></div>
+</body>
+
+</html>

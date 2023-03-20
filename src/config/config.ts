@@ -8,6 +8,7 @@ class Config {
         this.loadingMap = {};
 
         window.Bind.bindView(this.element.querySelector('.store-usage'), window.Store, 'usage');
+        window.Bind.bindView(this.element.querySelector('.store-total'), window.Store, 'limit');
     }
 
     checkStore() {

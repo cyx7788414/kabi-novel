@@ -14,10 +14,12 @@ class Bind {
     }
 
     private handleObj(obj: any, prop: string) {
-        if (obj.hasOwnProperty('_bindId')) {
+        if (!obj.hasOwnProperty('_bindId')) {
+            obj._bindId = this.objIndex++;
+        }
+        if (this.cbMap[obj._bindId + prop]) {
             return;
         }
-        obj._bindId = this.objIndex++;
         let index = '_' + 'prop';
         obj[index] = obj[prop];
         this.cbMap[obj._bindId + prop] = [];
