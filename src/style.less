@@ -84,7 +84,7 @@ html, body {
         line-height: 40px;
 
         .button {
-
+            margin-left: 10px;
         }
 
         .right {
@@ -104,6 +104,22 @@ html, body {
 
         .text {
             line-height: 60px;
+        }
+
+        &.display {
+            .text {
+                height: 400px;
+                border: 1px solid #ccc;
+                padding: 10px;
+                line-height: 20px;
+                font-size: 16px;
+                overflow: auto;
+
+                p {
+                    margin: 0;
+                    text-indent: 2em;
+                }
+            }
         }
 
     }

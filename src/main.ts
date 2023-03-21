@@ -6,36 +6,25 @@ import Modal from './common/modal/modal';
 import Message from './common/message/message';
 import Store from './common/store/store';
 import Bind from './common/bind/bind';
+import Layout from './common/layout/layout';
 
 const pages: string[] = ['bookshelf', 'article', 'catalogue', 'config'];
 
-function pageSwitch() {
-    document.querySelector('.article .content')!.innerHTML += '1';
-
-}
-
-function jumpTo(target: string) {
-    // document.querySelector('.show')?.classList.remove('show');
-    // document.querySelector(`.${target}`)?.classList.add('show');
-
-    window.location.hash = target;
-}
-
-
-
 function init() {
-    const debug = new Debugger();
+    new Debugger();
 
-    const bind = new Bind();
+    new Bind();
 
-    const modal = new Modal();
-    const message = new Message();
+    new Modal();
+    new Message();
 
-    const router = new Router(pages);
+    new Router(pages);
 
-    const store = new Store();
+    new Store();
+
+    new Layout();
     
-    const config = new Config();
+    window.Config = new Config();
 
     
 
@@ -43,12 +32,6 @@ function init() {
     const bookshelf = new BookShelf();
     console.log(bookshelf);
 }
-
-window.pageSwitch = pageSwitch;
-
-window.nextPage = pageSwitch;
-
-window.jumpTo = jumpTo;
 
 window.init = init;
 

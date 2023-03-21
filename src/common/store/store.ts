@@ -13,7 +13,7 @@ class Store {
             throw Error('store has been inited');
         }
         window.Store = this;
-        this.limit = 0;
+        this.limit = parseInt(this.get('limit') || '0');
         this.usage = 0;
 
         this.checkUsage();
@@ -21,16 +21,23 @@ class Store {
 
     set(key: string, value: string, cb?: {success?: Function, fail?: Function}): void {
         try {
-            localStorage.setItem(key, value);
+            let ckey = LzString.compress(key);
+            let cvalue = LzString.compress(value);
+            localStorage.setItem(ckey, cvalue);
             this.checkUsage();
             cb && cb.success && cb.success();
         } catch(e) {
+            window.Message.add({content: '缓存失败，空间不足'});
             cb && cb.fail && cb.fail();
         }
     }
 
-    get(key: string): string {
-        return localStorage.getItem(key);
+    get(key: string): string | null {
+        let store = localStorage.getItem(LzString.compress(key));
+        if (store) {
+            return LzString.decompress(store);
+        }
+        return null;
     }
 
     checkUsage(): void {
@@ -43,28 +50,34 @@ class Store {
             return;
         }
         this.limitChecking = true;
-        let base = this.usage;
-        let addLength = 1000000;
-        let index = 0;
 
-        while (addLength > 2) {
-            try {
-                let key = `_test${index++}`;
-                localStorage.setItem(key, new Array(addLength - key.length + 1).join('a'));    
-                base += addLength;     
-            } catch(e) {
-                console.log(e);
-                index--;
-                addLength = Math.round(addLength / 2);
+        window.setTimeout(() => {
+
+            let base = this.usage;
+            let addLength = 1000000;
+            let index = 0;
+
+            while (addLength > 2) {
+                try {
+                    let key = `_test${index++}`;
+                    localStorage.setItem(key, new Array(addLength - key.length + 1).join('a'));    
+                    base += addLength;     
+                } catch(e) {
+                    console.log(e);
+                    index--;
+                    addLength = Math.round(addLength / 2);
+                }
             }
-        }
-        this.limit = base;
+            this.limit = base;
 
-        Object.keys(localStorage).filter(v => v.indexOf('_test') === 0).forEach(v => localStorage.removeItem(v));
+            Object.keys(localStorage).filter(v => v.indexOf('_test') === 0).forEach(v => localStorage.removeItem(v));
+            
+            this.set('limit', this.limit.toString());
 
-        this.limitChecking = false;
+            this.limitChecking = false;
 
-        window.Message.add({content: '检测完成'});
+            window.Message.add({content: '检测完成'});
+        }, 1000);
     }
 };
 

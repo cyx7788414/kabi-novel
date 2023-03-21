@@ -3,6 +3,8 @@ import { strToDom } from '../common';
 interface MessageOption {
     content: string;
     onOk?: Function;
+    onCancle?: Function;
+    banAutoRemove?: boolean;
 };
 
 class MessageItem {
@@ -23,6 +25,15 @@ class MessageItem {
             option.onOk && option.onOk();
             this.remove();
         };
+
+        if (option.banAutoRemove) {
+            return;
+        }
+
+        window.setTimeout(() => {
+            option.onCancle && option.onCancle();
+            this.remove();
+        }, 1000);
     }
 
     remove() {

@@ -20,7 +20,7 @@ class Bind {
         if (this.cbMap[obj._bindId + prop]) {
             return;
         }
-        let index = '_' + 'prop';
+        let index = '_' + prop;
         obj[index] = obj[prop];
         this.cbMap[obj._bindId + prop] = [];
         Object.defineProperty(obj, prop, {
@@ -33,6 +33,12 @@ class Bind {
                 this.run(obj, prop, value, temp);
             }
         })
+    }
+
+    bindStyle(element: HTMLElement, obj: any, prop: string, target: any, handle?: Function) {
+        this.bind(obj, prop, (newV: any) => {
+            element.style[target] = handle?handle(newV):newV;
+        }, true);
     }
 
     bindView(element: HTMLElement, obj: any, prop: string) {
