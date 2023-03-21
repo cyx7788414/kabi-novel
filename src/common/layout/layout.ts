@@ -56,6 +56,6 @@ class Layout {
         this.set('fontSize');
         this.set('lineHeight');
     }
-}
+};
 
 export default Layout;

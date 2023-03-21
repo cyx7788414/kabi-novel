@@ -1,15 +1,18 @@
 class Config {
     element: HTMLElement;
 
-    loadingMap: {[key: string]: boolean};
-
     displayText: string;
+
+    url: string;
 
     constructor() {
         this.element = document.querySelector('.page.config');
-        this.loadingMap = {};
+
+        this.url = window.Api.url;
 
         this.makeDisplayText();
+
+        window.Bind.bindInput(this.element.querySelector('.url input'), this, 'url');
 
         window.Bind.bindView(this.element.querySelector('.store-usage'), window.Store, 'usage');
         window.Bind.bindView(this.element.querySelector('.store-total'), window.Store, 'limit');
@@ -28,19 +31,13 @@ class Config {
     makeDisplayText() {
         let text = '测试文本';
 
-        let result = new Array(100).join(text);
+        let result = new Array(200).join(text);
 
         this.displayText = result;
     }
 
     checkApi() {
-
-    }
-
-    checkStore() {
-        this.loadingMap.checkStore = true;
-
-        window.Store.checkLimit();
+        window.Api.checkUrl(this.url);
     }
 };
 

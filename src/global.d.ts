@@ -5,6 +5,7 @@ import Router from "./common/router/router";
 import Store from "./common/store/store";
 import Config from "./config/config";
 import Layout from "./common/layout/layout";
+import Api from './common/api/api';
 
 declare global {
     interface Window {
@@ -16,6 +17,7 @@ declare global {
         Router?: Router;
         Store?: Store;
         Layout?: Layout;
+        Api?: Api;
 
         Config?: Config;
 

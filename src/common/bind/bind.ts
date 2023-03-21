@@ -35,6 +35,15 @@ class Bind {
         })
     }
 
+    bindInput(element: HTMLInputElement, obj: any, prop: string) {
+        this.bind(obj, prop, (newV: any) => {
+            element.value = newV;
+        }, true);
+        element.onchange = (event: InputEvent) => {
+            obj[prop] = (event.target as HTMLInputElement).value;
+        };
+    }
+
     bindStyle(element: HTMLElement, obj: any, prop: string, target: any, handle?: Function) {
         this.bind(obj, prop, (newV: any) => {
             element.style[target] = handle?handle(newV):newV;

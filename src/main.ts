@@ -7,6 +7,7 @@ import Message from './common/message/message';
 import Store from './common/store/store';
 import Bind from './common/bind/bind';
 import Layout from './common/layout/layout';
+import Api from './common/api/api';
 
 const pages: string[] = ['bookshelf', 'article', 'catalogue', 'config'];
 
@@ -23,6 +24,8 @@ function init() {
     new Store();
 
     new Layout();
+
+    new Api();
     
     window.Config = new Config();
 
