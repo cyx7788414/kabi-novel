@@ -17,6 +17,10 @@ class Store {
         this.usage = 0;
 
         this.checkUsage();
+        if (this.limit === 0) {
+            // this.checkLimit();
+            window.Message.add({content: '缓存未初始化请手动检测'});
+        }
     }
 
     set(key: string, value: string, cb?: {success?: Function, fail?: Function}): void {
@@ -60,6 +64,7 @@ class Store {
             while (addLength > 2) {
                 try {
                     let key = `_test${index++}`;
+                    if (addLength < key.length) {break;}
                     localStorage.setItem(key, new Array(addLength - key.length + 1).join('a'));    
                     base += addLength;     
                 } catch(e) {

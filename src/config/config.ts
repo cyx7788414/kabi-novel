@@ -25,7 +25,11 @@ class Config {
         window.Bind.bindStyle(display, window.Layout, 'fontSize', 'fontSize', (v: any) => `${v}px`);
         window.Bind.bindStyle(display, window.Layout, 'lineHeight', 'lineHeight', (v: any) => `${v}px`);
 
-        this.checkApi();
+        if (!this.url) {
+            window.Message.add({content: '当前未配置服务器地址'});
+        } else {
+            this.checkUrl();
+        }
     }
 
     makeDisplayText() {
@@ -36,7 +40,7 @@ class Config {
         this.displayText = result;
     }
 
-    checkApi() {
+    checkUrl() {
         window.Api.checkUrl(this.url);
     }
 };

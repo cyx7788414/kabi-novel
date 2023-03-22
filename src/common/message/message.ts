@@ -33,7 +33,7 @@ class MessageItem {
         window.setTimeout(() => {
             option.onCancle && option.onCancle();
             this.remove();
-        }, 1000);
+        }, 2000);
     }
 
     remove() {

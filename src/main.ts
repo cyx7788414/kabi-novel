@@ -9,7 +9,7 @@ import Bind from './common/bind/bind';
 import Layout from './common/layout/layout';
 import Api from './common/api/api';
 
-const pages: string[] = ['bookshelf', 'article', 'catalogue', 'config'];
+const pages: string[] = ['config', 'bookshelf', 'article', 'catalogue'];
 
 function init() {
     new Debugger();
