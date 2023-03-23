@@ -19,8 +19,8 @@ class Layout {
         window.Layout = this;
 
         this.limit = {
-            fontSize: 16,
-            lineHeight: 20
+            fontSize: 20,
+            lineHeight: 24
         };
 
         this.base = {

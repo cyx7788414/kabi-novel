@@ -1,3 +1,5 @@
+import {makeDisplayText} from '../common/common';
+
 class Config {
     element: HTMLElement;
 
@@ -10,7 +12,7 @@ class Config {
 
         this.url = window.Api.url;
 
-        this.makeDisplayText();
+        this.displayText = makeDisplayText(200);
 
         window.Bind.bindInput(this.element.querySelector('.url input'), this, 'url');
 
@@ -32,13 +34,6 @@ class Config {
         }
     }
 
-    makeDisplayText() {
-        let text = '测试文本';
-
-        let result = new Array(200).join(text);
-
-        this.displayText = result;
-    }
 
     checkUrl() {
         window.Api.checkUrl(this.url);

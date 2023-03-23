@@ -18,12 +18,16 @@
 
 <body onload="init()">
     <div class="page bookshelf show">
-        <div class="content">bookshelf</div>
+        <div class="content">
+            <div class="booklist">
+
+            </div>
+        </div>
         <div class="bar"></div>
         <div class="control">
             <div class="left-box">
                 <div class="button" onclick="Router.go('config')">配置</div>
-                <div class="button" onclick="">刷新</div>
+                <div class="button" onclick="BookShelf.getBookShelf()">刷新</div>
             </div>
             <div class="right-box">
                 <div class="button">&lt;</div>

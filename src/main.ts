@@ -29,11 +29,7 @@ function init() {
     
     window.Config = new Config();
 
-    
-
-
-    const bookshelf = new BookShelf();
-    console.log(bookshelf);
+    window.BookShelf = new BookShelf();
 }
 
 window.init = init;

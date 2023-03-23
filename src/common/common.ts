@@ -4,5 +4,13 @@ function strToDom(str: string): HTMLCollection {
     return div.children;
 }
 
+function makeDisplayText(time: number): string {
+    let text = '测试文本';
 
-export { strToDom };
+    let result = new Array(time + 1).join(text);
+
+    return result;
+}
+
+
+export { strToDom, makeDisplayText };

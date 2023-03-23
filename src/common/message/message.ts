@@ -38,7 +38,7 @@ class MessageItem {
 
     remove() {
         let parent = this.body.parentElement;
-        parent.removeChild(this.body);
+        parent && parent.removeChild(this.body);
     }
 };
 

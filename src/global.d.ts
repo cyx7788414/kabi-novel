@@ -6,6 +6,7 @@ import Store from "./common/store/store";
 import Config from "./config/config";
 import Layout from "./common/layout/layout";
 import Api from './common/api/api';
+import BookShelf from "./bookshelf/bookshelf";
 
 declare global {
     interface Window {
@@ -20,7 +21,7 @@ declare global {
         Api?: Api;
 
         Config?: Config;
-
+        BookShelf?: BookShelf;
     }
 }
 

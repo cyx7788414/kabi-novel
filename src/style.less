@@ -6,7 +6,8 @@ html, body {
     padding: 0;
     background-color: #fff;
     position: relative;
-    font-size: 14px;
+    font-size: 20px;
+    line-height: 24px;
 
     .button {
         min-width: 100px;
@@ -34,9 +35,10 @@ html, body {
     }
 
     .content {
-        height: 100%;
-        padding-bottom: @controlHeight + @barHeight;
-        padding-top: @scrollHack;
+        // height: 100%;
+        height: calc(100% - @controlHeight - @barHeight);
+        // padding-bottom: @controlHeight + @barHeight;
+        // padding-top: @scrollHack;
     }
 
     .bar {
@@ -77,11 +79,26 @@ html, body {
     }
 }
 
+.bookshelf {
+
+    .content {
+        overflow: auto;
+        padding: 20px;
+    }
+
+    .booklist {
+        height: 100%;
+        column-width: 1072px;
+        padding: 20px;
+    }
+}
+
 .config {
     .content {
         padding: 20px 40px;
         font-size: 30px;
         line-height: 40px;
+        height: 100%;
 
         .button {
             margin-left: 10px;
