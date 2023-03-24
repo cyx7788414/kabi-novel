@@ -9,24 +9,20 @@ class Layout {
 
     lineHeight: number;
 
-    limit: LayoutInterface;
-    base: LayoutInterface;
+    limit: LayoutInterface = {
+            fontSize: 20,
+            lineHeight: 24
+        };
+    base: LayoutInterface = {
+            fontSize: 30,
+            lineHeight: 40
+        };
 
     constructor() {
         if (window.Layout) {
             throw Error('layout has been inited');
         }
         window.Layout = this;
-
-        this.limit = {
-            fontSize: 20,
-            lineHeight: 24
-        };
-
-        this.base = {
-            fontSize: 30,
-            lineHeight: 40
-        };
 
         this.fontSize = parseInt(window.Store.get('fontSize') || this.base.fontSize.toString());
         this.lineHeight = parseInt(window.Store.get('lineHeight') || this.base.lineHeight.toString());

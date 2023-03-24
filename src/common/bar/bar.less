@@ -1,0 +1,22 @@
+.bar {
+    height: @barHeight;
+    position: absolute;
+    bottom: @controlHeight;
+    width: 100%;
+    background-color: #666;
+    text-align: center;
+
+    .bar-progress {
+        display: inline-block;
+        height: 100%;
+        background-color: #000;
+        float: left;
+    }
+    .bar-text {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        line-height: @barHeight;
+        color: #fff;
+    }
+}

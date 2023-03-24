@@ -53,12 +53,11 @@ class ModalItem {
 
 class Modal {
     element: HTMLElement;
-    list: ModalItem[];
+    list: ModalItem[] = [];
     constructor() {
         if (window.Modal) {
             throw Error('modal has been inited');
         }
-        this.list = [];
         window.Modal = this;
         this.element = document.querySelector('.modal-box');
     }

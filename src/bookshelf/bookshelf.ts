@@ -1,34 +1,32 @@
 import Bar from '../common/bar/bar';
-import { makeDisplayText } from '../common/common';
+import Pagination from '../common/pagination/pagination';
 
 class BookShelf {
     element: HTMLElement;
     bar: Bar;
 
-    bookList: any[];
+    bookList: any[] = [];
 
-    test: string;
+    pagination: Pagination;
 
     constructor() {
         this.element = document.querySelector('.page.bookshelf');
-        // this.bar = new Bar(this.element.querySelector('.bar'));
+        
+        this.pagination = new Pagination({
+            root: this.element.querySelector('.content')
+        });
+        
+        this.bar = new Bar({
+            element: this.element.querySelector('.bar'),
+            pagination: this.pagination
+        });
 
         this.bookList = JSON.parse(window.Store.get('bookshelf')) || [];
-
-        this.test = makeDisplayText(1000);
-
-        window.Bind.bindView(this.element.querySelector('.booklist'), this, 'test');
 
         if (this.bookList.length === 0) {
             this.getBookShelf();
         }
 
-        window.setInterval(() => {
-            // window.Message.add({content: 'scrollWidth' + this.element.querySelector('.booklist').scrollWidth});
-            this.element.querySelector('.content').scrollLeft = 100;
-        }, 3000);
-
-        this.element.querySelector('.content').scrollLeft = 100;
     }
 
     getBookShelf(): void {

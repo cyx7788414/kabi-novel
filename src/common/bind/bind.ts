@@ -1,16 +1,13 @@
 class Bind {
-    cbMap: any;
-    objIndex: number;
-    objMap: any;
+    cbMap: any = {};
+    objIndex: number = 0;
+    objMap: any = {};
 
     constructor() {
         if (window.Bind) {
             throw Error('bind has been inited');
         }
         window.Bind = this;
-        this.cbMap = {};
-        this.objIndex = 0;
-        this.objMap = {};
     }
 
     private handleObj(obj: any, prop: string) {
@@ -36,6 +33,9 @@ class Bind {
     }
 
     bindInput(element: HTMLInputElement, obj: any, prop: string) {
+        if (!element) {
+            throw new Error('element is null');
+        }
         this.bind(obj, prop, (newV: any) => {
             element.value = newV;
         }, true);
@@ -45,14 +45,20 @@ class Bind {
     }
 
     bindStyle(element: HTMLElement, obj: any, prop: string, target: any, handle?: Function) {
+        if (!element) {
+            throw new Error('element is null');
+        }
         this.bind(obj, prop, (newV: any) => {
             element.style[target] = handle?handle(newV):newV;
         }, true);
     }
 
-    bindView(element: HTMLElement, obj: any, prop: string) {
+    bindView(element: HTMLElement, obj: any, prop: string, formatter?: Function) {
+        if (!element) {
+            throw new Error('element is null');
+        }
         this.bind(obj, prop, (newV: any) => {
-            element.innerHTML = newV;
+            element.innerHTML = formatter?formatter(newV):newV;
         }, true);
     }
 

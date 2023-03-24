@@ -1,7 +1,11 @@
 class Api {
     url: string;
 
-    apiMap: {[key: string]: string};
+    apiMap: {[key: string]: string} = {
+            bookshelf: '/getBookshelf',
+            catalogue: '/getChapterList',
+            article: '/getBookContent'
+        };
 
     constructor() {
         if (window.Api) {
@@ -10,12 +14,6 @@ class Api {
         window.Api = this;
 
         this.url = window.Store.get('url') || '';
-
-        this.apiMap = {
-            bookshelf: '/getBookshelf',
-            catalogue: '/getChapterList',
-            article: '/getBookContent'
-        };
     }
 
     getBookshelf(cb?: {success?: Function, error?: Function}): void {

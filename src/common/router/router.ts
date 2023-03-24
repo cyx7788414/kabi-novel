@@ -2,7 +2,7 @@ class Router {
 
     current: string;
 
-    pages: string[];
+    pages: string[] = [];
 
     constructor(pages: string[]) {
         if (window.Router) {

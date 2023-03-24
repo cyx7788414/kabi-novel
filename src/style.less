@@ -9,8 +9,12 @@ html, body {
     font-size: 20px;
     line-height: 24px;
 
+    * {
+        box-sizing: border-box;
+    }
+
     .button {
-        min-width: 100px;
+        min-width: 150px;
         padding: 0 10px;
         font-size: 60px;
         display: inline-block;
@@ -39,15 +43,13 @@ html, body {
         height: calc(100% - @controlHeight - @barHeight);
         // padding-bottom: @controlHeight + @barHeight;
         // padding-top: @scrollHack;
+        padding: 10px;
+
+        @import url(common/pagination/pagination.less);
     }
 
-    .bar {
-        height: @barHeight;
-        background-color: #ccc;
-        position: absolute;
-        bottom: @controlHeight;
-        width: 100%;
-    }
+    @import url(common/bar/bar.less);
+
 
     .control {
         height: @controlHeight;
@@ -68,12 +70,6 @@ html, body {
         .button {
             line-height: @controlHeight - 20px;
             height: 100%;
-            // min-width: 100px;
-            // padding: 0 10px;
-            // font-size: 60px;
-            // display: inline-block;
-            // border: 1px solid #333;
-            // text-align: center;
             margin: 0 20px;
         }
     }
@@ -132,7 +128,7 @@ html, body {
 
         &.display {
             .text {
-                height: 450px;
+                height: 500px;
                 border: 1px solid #333;
                 padding: 10px;
                 line-height: 20px;

@@ -19,9 +19,7 @@
 <body onload="init()">
     <div class="page bookshelf show">
         <div class="content">
-            <div class="booklist">
-
-            </div>
+            <div class="book-list"></div>
         </div>
         <div class="bar"></div>
         <div class="control">
@@ -30,8 +28,8 @@
                 <div class="button" onclick="BookShelf.getBookShelf()">刷新</div>
             </div>
             <div class="right-box">
-                <div class="button">&lt;</div>
-                <div class="button">&gt;</div>
+                <div class="button" onclick="BookShelf.pagination.pageChange(-1)">&lt;</div>
+                <div class="button" onclick="BookShelf.pagination.pageChange(1)">&gt;</div>
             </div>
         </div>
     </div>

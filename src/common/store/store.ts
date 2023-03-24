@@ -3,10 +3,10 @@ import * as LzString from 'lz-string';
 class Store {
     data: any;
 
-    limitChecking: boolean;
-    limit: number;
+    limitChecking: boolean = false;
+    limit: number = 0;
 
-    usage: number;
+    usage: number = 0;
 
     constructor() {
         if (window.Store) {
@@ -14,7 +14,6 @@ class Store {
         }
         window.Store = this;
         this.limit = parseInt(this.get('limit') || '0');
-        this.usage = 0;
 
         this.checkUsage();
         if (this.limit === 0) {
