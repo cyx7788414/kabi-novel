@@ -3,6 +3,7 @@ import Pagination from "../pagination/pagination";
 class Bar {
     element: HTMLElement;
     pagination: Pagination;
+    percent: number;
 
     constructor(config: {
         element: HTMLElement,
@@ -10,6 +11,7 @@ class Bar {
     }) {
         this.element = config.element;
         this.pagination = config.pagination;
+        this.percent = 0;
 
         this.element.innerHTML = `
                 <div class="bar-progress"></div>
@@ -20,10 +22,17 @@ class Bar {
         let total: HTMLElement = this.element.querySelector('.bar-total');
         let progress: HTMLElement = this.element.querySelector('.bar-progress');
 
-        window.Bind.bindView(index, this.pagination, 'pageIndex', (value: number) => value + 1);
-        window.Bind.bindView(total, this.pagination, 'pageLimit');
+        window.Bind.bindView(index, this.pagination, 'pageIndex', (value: number) => {
+            let v = value + 1;
+            this.percent = v / this.pagination.pageLimit;
+            return v;
+        });
+        window.Bind.bindView(total, this.pagination, 'pageLimit', (value: number) => {
+            this.percent = (this.pagination.pageIndex + 1) / value;
+            return value;
+        });
 
-        // window.Bind.bindStyle(progress, this.pagination, 'pagePadding', 'height', (v: any) => `${v}px`)
+        window.Bind.bindStyle(progress, this, 'percent', 'width', (v: any) => `${v * 100}%`);
     }
 };
 

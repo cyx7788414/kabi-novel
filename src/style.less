@@ -82,10 +82,43 @@ html, body {
         padding: 20px;
     }
 
-    .booklist {
-        height: 100%;
-        column-width: 1072px;
-        padding: 20px;
+    .book-list {
+        .book-item {
+            display: inline-block;
+            width: 49.5%;
+            padding: 10px;
+            min-height: 200px;
+            vertical-align: middle;
+
+            .book-cover {
+                display: inline-block;
+                height: 100%;
+                width: 29%;
+                border: 1px solid #ccc;
+                background-size: 100%;
+                background-position: center;
+                vertical-align: middle;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            .book-info {
+                display: inline-block;
+                height: 100%;
+                width: 69%;
+                padding: 10px;
+                vertical-align: middle;
+
+                >div {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
+        }
     }
 }
 

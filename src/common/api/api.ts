@@ -7,6 +7,8 @@ class Api {
             article: '/getBookContent'
         };
 
+    private _checkXHR: XMLHttpRequest;
+
     constructor() {
         if (window.Api) {
             throw Error('api has been inited');
@@ -65,6 +67,8 @@ class Api {
                 }
             }
         }
+
+        return xhr;
     }
 
     setUrl(url: string) {
@@ -73,7 +77,10 @@ class Api {
     }
 
     checkUrl(url: string) {
-        this.get(url + this.apiMap.bookshelf, {}, {
+        if (this._checkXHR) {
+            this._checkXHR.abort();
+        }
+        this._checkXHR = this.get(url + this.apiMap.bookshelf, {}, {
             success: (data: any) => {
                 window.Message.add({content: '服务器地址测试成功'});
                 this.setUrl(url);
