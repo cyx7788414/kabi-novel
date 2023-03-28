@@ -43,6 +43,7 @@ class Pagination {
     }
 
     checkPage(): void {
+        this.pageStep = this.box.offsetHeight;
         this.pageLimit = Math.ceil(this.box.scrollHeight / this.pageStep) || 1;
         this.pagePadding = this.pageStep * this.pageLimit - this.box.scrollHeight;
     }

@@ -4,6 +4,8 @@ class Router {
 
     pages: string[] = [];
 
+    cbMap: {[key: string]: Function} = {};
+
     constructor(pages: string[]) {
         if (window.Router) {
             throw Error('router has been inited');
@@ -35,6 +37,8 @@ class Router {
     private switchPage(str: string) {
         document.querySelector('.show')?.classList.remove('show');
         document.querySelector(`.${str}`)?.classList.add('show');
+
+        this.cbMap[str] && this.cbMap[str]();
     }
 
     go(target: string): void  {

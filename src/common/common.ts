@@ -12,5 +12,13 @@ function makeDisplayText(time: number): string {
     return result;
 }
 
+function getSpecialParent(ele: HTMLElement,checkFun: Function): HTMLElement | null {
+    if (ele && ele !== document as unknown && checkFun(ele)) {
+        return ele;
+    }
+    let parent = ele.parentElement || ele.parentNode;
+    return parent?getSpecialParent(parent as HTMLElement, checkFun):null;
+}
 
-export { strToDom, makeDisplayText };
+
+export { strToDom, makeDisplayText, getSpecialParent };
