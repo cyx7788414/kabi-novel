@@ -37,7 +37,7 @@ class Router {
     private switchPage(str: string) {
         document.querySelector('.show')?.classList.remove('show');
         document.querySelector(`.${str}`)?.classList.add('show');
-
+        this.current = str;
         this.cbMap[str] && this.cbMap[str]();
     }
 

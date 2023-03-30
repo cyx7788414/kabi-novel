@@ -40,7 +40,6 @@ html, body {
 
     .content {
         // height: 100%;
-        height: calc(100% - @controlHeight - @barHeight);
         // padding-bottom: @controlHeight + @barHeight;
         // padding-top: @scrollHack;
         padding: 10px;
@@ -70,17 +69,28 @@ html, body {
         .button {
             line-height: @controlHeight - 20px;
             height: 100%;
-            margin: 0 20px;
+            margin: 0 10px;
+        }
+    }
+}
+
+.catalogue {
+    .article-list {
+        font-size: 0;
+        .article-item {
+            display: inline-block;
+            width: 50%;
+            font-size: 40px;
+            line-height: 80px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            vertical-align: middle;
         }
     }
 }
 
 .bookshelf {
-
-    .content {
-        overflow: auto;
-        padding: 20px;
-    }
 
     .book-list {
         font-size: 0;
@@ -92,6 +102,7 @@ html, body {
             vertical-align: middle;
             font-size: 24px;
             line-height: 40px;
+            margin: 0;
 
             .book-cover {
                 display: inline-block;

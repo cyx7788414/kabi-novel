@@ -18,8 +18,8 @@ class Api {
         this.url = window.Store.get('url') || '';
     }
 
-    getCatalogue(cb?: {success?: Function, error?: Function}): void {
-        this.get(this.url + this.apiMap.catalogue, {}, {
+    getCatalogue(url: string, cb?: {success?: Function, error?: Function}): void {
+        this.get(this.url + this.apiMap.catalogue, {url: url}, {
             success: (data: any) => {
                 cb && cb.success && cb.success(data);
             },

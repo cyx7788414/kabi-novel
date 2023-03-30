@@ -7,6 +7,8 @@ import Config from "./config/config";
 import Layout from "./common/layout/layout";
 import Api from './common/api/api';
 import BookShelf from "./bookshelf/bookshelf";
+import Article from './article/article';
+import Catalogue from './catalogue/catalogue';
 
 declare global {
     interface Window {
@@ -22,6 +24,8 @@ declare global {
 
         Config?: Config;
         BookShelf?: BookShelf;
+        Article?: Article;
+        Catalogue?: Catalogue;
     }
 }
 

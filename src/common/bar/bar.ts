@@ -33,6 +33,13 @@ class Bar {
         });
 
         window.Bind.bindStyle(progress, this, 'percent', 'width', (v: any) => `${v * 100}%`);
+
+        this.element.onclick =(event: MouseEvent) => {
+            let width = this.element.offsetWidth;
+            let x = event.pageX;
+            let index = Math.floor(this.pagination.pageLimit * x / width);
+            this.pagination.setPage(index);
+        };
     }
 };
 
