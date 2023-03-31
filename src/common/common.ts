@@ -20,5 +20,16 @@ function getSpecialParent(ele: HTMLElement,checkFun: Function): HTMLElement | nu
     return parent?getSpecialParent(parent as HTMLElement, checkFun):null;
 }
 
+function getObject(source: any, keys: string[], others?: {[key: string]: any}): any {
+    let obj: any = {};
+    keys.forEach(key => {
+        obj[key] = source[key];
+    });
+    others && Object.keys(others).forEach(key => {
+        obj[key] = others[key];
+    });
+    return obj;
+}
 
-export { strToDom, makeDisplayText, getSpecialParent };
+
+export { strToDom, makeDisplayText, getSpecialParent, getObject };

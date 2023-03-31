@@ -1,5 +1,5 @@
 import Bar from '../common/bar/bar';
-import { getSpecialParent } from '../common/common';
+import { getObject, getSpecialParent } from '../common/common';
 import Pagination from '../common/pagination/pagination';
 
 class BookShelf {
@@ -27,9 +27,9 @@ class BookShelf {
 
         this.bookList = JSON.parse(window.Store.get('bookshelf') || '[]');
 
-        this.currentBook = JSON.parse(window.Store.get('currentBook') || 'undefined');
+        this.currentBook = JSON.parse(window.Store.get('currentBook') || '""');
 
-        window.Bind.bindView(this.element.querySelector('.book-list'), this, 'bookList', (booklist: any[]) => {
+        window.Bind.bindView(this.element.querySelector('.book-list'), this, 'bookList', (bookList: any[]) => {
             let height = (this.element.querySelector('.pagination-box') as HTMLElement).offsetHeight / 4;
             let imgWidth = height * 3 / 4;
             let width = Math.floor((this.element.querySelector('.book-list') as HTMLElement).offsetWidth / 2);
@@ -40,7 +40,7 @@ class BookShelf {
                     .book-item .book-info {width: ${width - imgWidth - 30}px;}
                 </style>
             `;
-            booklist.forEach(book => {
+            bookList.forEach(book => {
                 let date = new Date(book.latestChapterTime);
                 html += `
                     <div class="book-item" key="${book.name}~!@#$%^&*${book.author}">
@@ -67,9 +67,9 @@ class BookShelf {
             this.bookList = [].concat(this.bookList);
         };
 
-        if (this.bookList.length === 0) {
-            this.getBookShelf();
-        }
+        // if (this.bookList.length === 0) {
+        //     this.getBookShelf();
+        // }
     }
 
     getBookShelf(): void {
@@ -81,8 +81,20 @@ class BookShelf {
         window.Api.getBookshelf({
             success: (res: any) => {
                 this.loading = false;
-                this.bookList = [].concat(res.data).concat(res.data);
+                let bookList = res.data.map((book: any) => {
+                    let keys: string[] = ['name', 'author', 'bookUrl', 'coverUrl', 'customCoverUrl', 'durChapterIndex', 'durChapterPos', 'durChapterTime', 'durChapterTitle', 'latestChapterTime', 'latestChapterTitle'];
+                    return getObject(book, keys, {
+                        key: `${book.name}~!@#$%^&*${book.author}`
+                    });
+                });
+                this.bookList = [].concat(bookList).concat(bookList);
                 window.Store.set('bookshelf', JSON.stringify(this.bookList));
+
+                //book key _  source _ catalogue _ article
+
+                //make book during store
+
+                //clear old book store
             },
             error: (err: any) => {
                 this.loading = false;

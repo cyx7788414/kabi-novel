@@ -73,7 +73,7 @@ class Api {
                 } catch(e) {
                     response = this.responseText;
                 }
-                if (this.status === 200) {
+                if (this.status === 200 && response.isSuccess) {
                     cb && cb.success && cb.success(response);
                 } else {
                     cb && cb.error && cb.error(response);

@@ -25,8 +25,13 @@ class Catalogue {
         });
 
         window.Bind.bindView(this.element.querySelector('.article-list'), this, 'list', (list: any[]) => {
-            let height = this.element.querySelector('.pagination-box').clientHeight;
+            console.log(list);
+            let height = (this.element.querySelector('.pagination-box') as HTMLElement).offsetHeight;
+            let line = height / Math.round(height / 80);
             let html = `
+                <style>
+                    .article-item {line-height: ${line}px;}
+                </style>
             `;
             list.forEach(article => {
                 html += `
@@ -40,7 +45,7 @@ class Catalogue {
         });
 
         let func = () => {
-            this.currentBook = JSON.parse(window.Store.get('currentBook') || 'undefined');
+            this.currentBook = JSON.parse(window.Store.get('currentBook') || '""');
 
             if (window.Router.current === 'article' && !this.currentBook) {
                 window.Router.go('bookshelf');
