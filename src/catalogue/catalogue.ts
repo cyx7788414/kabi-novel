@@ -25,7 +25,6 @@ class Catalogue {
         });
 
         window.Bind.bindView(this.element.querySelector('.article-list'), this, 'list', (list: any[]) => {
-            console.log(list);
             let height = (this.element.querySelector('.pagination-box') as HTMLElement).offsetHeight;
             let line = height / Math.round(height / 80);
             let html = `
