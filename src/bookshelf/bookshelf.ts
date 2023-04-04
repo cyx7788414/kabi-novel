@@ -1,5 +1,5 @@
 import Bar from '../common/bar/bar';
-import { getObject, getSpecialParent } from '../common/common';
+import { Book, getObject, getSpecialParent } from '../common/common';
 import Pagination from '../common/pagination/pagination';
 
 class BookShelf {
@@ -7,8 +7,9 @@ class BookShelf {
     bar: Bar;
     pagination: Pagination;
 
-    bookList: any[] = [];
-    currentBook: any;
+    bookMap: {[key: string]: Book} = {};
+    bookList: Book[] = [];
+    currentBook: Book;
 
 
     loading: boolean = false;
@@ -29,7 +30,7 @@ class BookShelf {
 
         this.currentBook = JSON.parse(window.Store.get('currentBook') || '""');
 
-        window.Bind.bindView(this.element.querySelector('.book-list'), this, 'bookList', (bookList: any[]) => {
+        window.Bind.bindView(this.element.querySelector('.book-list'), this, 'bookList', (bookList: Book[]) => {
             let height = (this.element.querySelector('.pagination-box') as HTMLElement).offsetHeight / 4;
             let imgWidth = height * 3 / 4;
             let width = Math.floor((this.element.querySelector('.book-list') as HTMLElement).offsetWidth / 2);
@@ -41,9 +42,10 @@ class BookShelf {
                 </style>
             `;
             bookList.forEach(book => {
+                this.bookMap[book.id] = book;
                 let date = new Date(book.latestChapterTime);
                 html += `
-                    <div class="book-item" key="${book.name}~!@#$%^&*${book.author}">
+                    <div class="book-item" key="${book.id}">
                         <div class="book-cover" style="background-image: url(${book.customCoverUrl});">
                             <img src="${book.coverUrl}" alt="${book.name}"/>
                         </div>
@@ -72,6 +74,10 @@ class BookShelf {
         // }
     }
 
+    handleBookList(): void {
+
+    }
+
     getBookShelf(): void {
         if (this.loading === true) {
             window.Message.add({content: '正在加载书架数据'});
@@ -81,13 +87,14 @@ class BookShelf {
         window.Api.getBookshelf({
             success: (res: any) => {
                 this.loading = false;
-                let bookList = res.data.map((book: any) => {
+                let bookList: Book[] = res.data.map((book: any) => {
                     let keys: string[] = ['name', 'author', 'bookUrl', 'coverUrl', 'customCoverUrl', 'durChapterIndex', 'durChapterPos', 'durChapterTime', 'durChapterTitle', 'latestChapterTime', 'latestChapterTitle'];
                     return getObject(book, keys, {
-                        key: `${book.name}~!@#$%^&*${book.author}`
+                        id: window.Store.compress(`${book.name}~!@#$%^&*${book.author}`),
+                        source: window.Store.compress(book.bookUrl)
                     });
                 });
-                this.bookList = [].concat(bookList).concat(bookList);
+                this.bookList = [].concat(bookList);
                 window.Store.set('bookshelf', JSON.stringify(this.bookList));
 
                 //book key _  source _ catalogue _ article
@@ -107,9 +114,9 @@ class BookShelf {
         let item = getSpecialParent((event.target || event.srcElement) as HTMLElement, (ele: HTMLElement) => {
             return ele.classList.contains('book-item');
         });
-        let key = item.getAttribute('key').split('~!@#$%^&*');
-        this.currentBook = this.bookList.filter(v => v.name === key[0] && v.author === key[1])[0] || null;
-        window.Store.set('currentBook', JSON.stringify(this.currentBook));
+        let id = item.getAttribute('key');
+        this.currentBook = this.bookMap[id];
+        window.Store.set('current', id);
         window.Router.go('article');
     }
 };

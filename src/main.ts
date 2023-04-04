@@ -44,6 +44,7 @@ function init() {
     window.Article = new Article();
     
     window.Catalogue = new Catalogue();
+
 }
 
 window.init = init;

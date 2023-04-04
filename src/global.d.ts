@@ -26,6 +26,7 @@ declare global {
         BookShelf?: BookShelf;
         Article?: Article;
         Catalogue?: Catalogue;
+
     }
 }
 

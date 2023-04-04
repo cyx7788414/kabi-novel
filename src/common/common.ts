@@ -31,5 +31,21 @@ function getObject(source: any, keys: string[], others?: {[key: string]: any}): 
     return obj;
 }
 
+interface Book {
+    id: string;
+    source: string;
+    name: string;
+    author: string;
+    bookUrl: string;
+    coverUrl: string;
+    customCoverUrl: string;
+    durChapterIndex: string;
+    durChapterPos: string;
+    durChapterTime: string;
+    durChapterTitle: string;
+    latestChapterTime: string;
+    latestChapterTitle: string;
+}
 
-export { strToDom, makeDisplayText, getSpecialParent, getObject };
+
+export { strToDom, makeDisplayText, getSpecialParent, getObject, Book };

@@ -1,4 +1,10 @@
-import * as LzString from 'lz-string';
+// import * as LzString from 'lz-string';
+import { compress, decompress } from 'lz-string';
+
+// prefix map
+// a article
+// c catalogue
+// p progress
 
 class Store {
     data: any;
@@ -7,6 +13,11 @@ class Store {
     limit: number = 0;
 
     usage: number = 0;
+
+    compress: Function = compress;
+    decompress: Function = decompress;
+
+    checkFlag: number;
 
     constructor() {
         if (window.Store) {
@@ -24,9 +35,10 @@ class Store {
 
     set(key: string, value: string, cb?: {success?: Function, fail?: Function}): void {
         try {
-            let ckey = LzString.compress(key);
-            let cvalue = LzString.compress(value);
-            localStorage.setItem(ckey, cvalue);
+            // let ckey = compress(key);
+            let cvalue = compress(value);
+            // localStorage.setItem(ckey, cvalue);
+            localStorage.setItem(key, cvalue);
             this.checkUsage();
             cb && cb.success && cb.success();
         } catch(e) {
@@ -36,15 +48,21 @@ class Store {
     }
 
     get(key: string): string | null {
-        let store = localStorage.getItem(LzString.compress(key));
+        // let store = localStorage.getItem(compress(key));
+        let store = localStorage.getItem(key);
         if (store) {
-            return LzString.decompress(store);
+            return decompress(store);
         }
         return null;
     }
 
     checkUsage(): void {
-        this.usage = Object.keys(localStorage).map(v => v + localStorage.getItem(v)).join('').length;
+        if (this.checkFlag) {
+            window.clearTimeout(this.checkFlag);
+        }
+        this.checkFlag = window.setTimeout(() => {
+            this.usage = Object.keys(localStorage).map(v => v + localStorage.getItem(v)).join('').length;
+        }, 500);
     }
 
     checkLimit(): void {
