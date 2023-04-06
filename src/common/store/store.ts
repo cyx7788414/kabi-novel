@@ -33,6 +33,18 @@ class Store {
         }
     }
 
+    bookInit(): void {
+
+    }
+
+    sourceChange(): void {
+
+    }
+
+    bookDelete(): void {
+        
+    }
+
     set(key: string, value: string, cb?: {success?: Function, fail?: Function}): void {
         try {
             // let ckey = compress(key);

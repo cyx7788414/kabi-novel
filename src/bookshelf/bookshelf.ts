@@ -9,7 +9,6 @@ class BookShelf {
 
     bookMap: {[key: string]: Book} = {};
     bookList: Book[] = [];
-    currentBook: Book;
 
 
     loading: boolean = false;
@@ -28,8 +27,6 @@ class BookShelf {
 
         this.bookList = JSON.parse(window.Store.get('bookshelf') || '[]');
 
-        this.currentBook = JSON.parse(window.Store.get('currentBook') || '""');
-
         window.Bind.bindView(this.element.querySelector('.book-list'), this, 'bookList', (bookList: Book[]) => {
             let height = (this.element.querySelector('.pagination-box') as HTMLElement).offsetHeight / 4;
             let imgWidth = height * 3 / 4;
@@ -41,6 +38,7 @@ class BookShelf {
                     .book-item .book-info {width: ${width - imgWidth - 30}px;}
                 </style>
             `;
+            this.bookMap = {};
             bookList.forEach(book => {
                 this.bookMap[book.id] = book;
                 let date = new Date(book.latestChapterTime);
@@ -88,7 +86,7 @@ class BookShelf {
             success: (res: any) => {
                 this.loading = false;
                 let bookList: Book[] = res.data.map((book: any) => {
-                    let keys: string[] = ['name', 'author', 'bookUrl', 'coverUrl', 'customCoverUrl', 'durChapterIndex', 'durChapterPos', 'durChapterTime', 'durChapterTitle', 'latestChapterTime', 'latestChapterTitle'];
+                    let keys: string[] = ['name', 'author', 'coverUrl', 'customCoverUrl', 'durChapterIndex', 'durChapterPos', 'durChapterTime', 'durChapterTitle', 'latestChapterTime', 'latestChapterTitle'];
                     return getObject(book, keys, {
                         id: window.Store.compress(`${book.name}~!@#$%^&*${book.author}`),
                         source: window.Store.compress(book.bookUrl)
@@ -115,7 +113,6 @@ class BookShelf {
             return ele.classList.contains('book-item');
         });
         let id = item.getAttribute('key');
-        this.currentBook = this.bookMap[id];
         window.Store.set('current', id);
         window.Router.go('article');
     }
