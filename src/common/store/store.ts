@@ -1,5 +1,6 @@
 // import * as LzString from 'lz-string';
 import { compress, decompress } from 'lz-string';
+import { Book } from '../common';
 
 // prefix map
 // a article
@@ -33,16 +34,16 @@ class Store {
         }
     }
 
-    bookInit(): void {
+    bookInit(book: Book): void {
 
     }
 
-    sourceChange(): void {
+    bookCompare(book: Book, oldV: Book): void {
 
     }
 
-    bookDelete(): void {
-        
+    bookDelete(book: Book): void {
+
     }
 
     set(key: string, value: string, cb?: {success?: Function, fail?: Function}): void {

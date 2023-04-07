@@ -36,7 +36,7 @@ class Bind {
         if (!element) {
             throw new Error('element is null');
         }
-        this.bind(obj, prop, (newV: any) => {
+        this.bind(obj, prop, (newV: any, oldV: any) => {
             element.value = newV;
         }, true);
         element.onchange = (event: InputEvent) => {
@@ -48,8 +48,8 @@ class Bind {
         if (!element) {
             throw new Error('element is null');
         }
-        this.bind(obj, prop, (newV: any) => {
-            element.style[target] = handle?handle(newV):newV;
+        this.bind(obj, prop, (newV: any, oldV: any) => {
+            element.style[target] = handle?handle(newV, oldV):newV;
         }, true);
     }
 
@@ -57,15 +57,15 @@ class Bind {
         if (!element) {
             throw new Error('element is null');
         }
-        this.bind(obj, prop, (newV: any) => {
-            element.innerHTML = formatter?formatter(newV):newV;
+        this.bind(obj, prop, (newV: any, oldV: any) => {
+            element.innerHTML = formatter?formatter(newV, oldV):newV;
         }, true);
     }
 
     bind(obj: any, prop: string, callback: Function, immediately?: boolean) {
         this.handleObj(obj, prop);
         this.cbMap[obj._bindId + prop].push(callback);
-        immediately && callback(obj[prop]);
+        immediately && callback(obj[prop], undefined);
     }
 
     run(obj: any, prop: string, newV?: any, oldV?: any) {

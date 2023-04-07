@@ -27,7 +27,8 @@ class BookShelf {
 
         this.bookList = JSON.parse(window.Store.get('bookshelf') || '[]');
 
-        window.Bind.bindView(this.element.querySelector('.book-list'), this, 'bookList', (bookList: Book[]) => {
+        window.Bind.bindView(this.element.querySelector('.book-list'), this, 'bookList', (bookList: Book[], oldV: Book[] = []) => {
+            this.compareBookList(bookList, oldV);
             let height = (this.element.querySelector('.pagination-box') as HTMLElement).offsetHeight / 4;
             let imgWidth = height * 3 / 4;
             let width = Math.floor((this.element.querySelector('.book-list') as HTMLElement).offsetWidth / 2);
@@ -38,9 +39,7 @@ class BookShelf {
                     .book-item .book-info {width: ${width - imgWidth - 30}px;}
                 </style>
             `;
-            this.bookMap = {};
             bookList.forEach(book => {
-                this.bookMap[book.id] = book;
                 let date = new Date(book.latestChapterTime);
                 html += `
                     <div class="book-item" key="${book.id}">
@@ -72,8 +71,22 @@ class BookShelf {
         // }
     }
 
-    handleBookList(): void {
-
+    compareBookList(newV: Book[], oldV: Book[]): void {
+        let oldMap = this.bookMap;
+        this.bookMap = {};
+        newV.forEach(book => {
+            this.bookMap[book.id] = book;
+            if (!oldMap[book.id]) {
+                window.Store.bookInit(book);
+            } else {
+                //compare
+                window.Store.bookCompare(book, oldMap[book.id]);
+                delete oldMap[book.id];
+            }
+        });
+        Object.keys(oldMap).forEach((id: string) => {
+            window.Store.bookDelete(oldMap[id]);
+        });
     }
 
     getBookShelf(): void {
