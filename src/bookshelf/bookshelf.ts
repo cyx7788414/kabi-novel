@@ -25,7 +25,8 @@ class BookShelf {
             pagination: this.pagination
         });
 
-        this.bookList = JSON.parse(window.Store.get('bookshelf') || '[]');
+        // this.bookList = JSON.parse(window.Store.get('bookshelf') || '[]');
+        this.bookList = window.Store.getByHead('b_').map(v => JSON.parse(window.Store.get(v) || ''));//wait
 
         window.Bind.bindView(this.element.querySelector('.book-list'), this, 'bookList', (bookList: Book[], oldV: Book[] = []) => {
             this.compareBookList(bookList, oldV);
@@ -79,8 +80,10 @@ class BookShelf {
             if (!oldMap[book.id]) {
                 window.Store.bookInit(book);
             } else {
-                //compare
-                window.Store.bookCompare(book, oldMap[book.id]);
+                if (book.source !== oldMap[book.id].source) {
+                    window.Store.bookDelete(oldMap[book.id], true);
+                    window.Store.bookInit(book, true);
+                }
                 delete oldMap[book.id];
             }
         });
@@ -101,12 +104,16 @@ class BookShelf {
                 let bookList: Book[] = res.data.map((book: any) => {
                     let keys: string[] = ['name', 'author', 'coverUrl', 'customCoverUrl', 'durChapterIndex', 'durChapterPos', 'durChapterTime', 'durChapterTitle', 'latestChapterTime', 'latestChapterTitle'];
                     return getObject(book, keys, {
-                        id: window.Store.compress(`${book.name}~!@#$%^&*${book.author}`),
+                        // id: window.Store.compress(`${book.name}~!@#$%^&*${book.author}`),
+                        id: window.Store.compress(`${book.name}_${book.author}`),
                         source: window.Store.compress(book.bookUrl)
                     });
                 });
                 this.bookList = [].concat(bookList);
-                window.Store.set('bookshelf', JSON.stringify(this.bookList));
+                // window.Store.set('bookshelf', JSON.stringify(this.bookList));
+                this.bookList.forEach(book => {
+                    window.Store.set(`b_${book.id}`, JSON.stringify(book));
+                });
 
                 //book key _  source _ catalogue _ article
 

@@ -4,6 +4,7 @@ import { Book } from '../common';
 
 // prefix map
 // a article
+// b book
 // c catalogue
 // p progress
 
@@ -34,16 +35,26 @@ class Store {
         }
     }
 
-    bookInit(book: Book): void {
-
+    bookInit(book: Book, onlySource?: boolean): void {
+        if (onlySource) {
+            return;
+        }
+        this.set(`p_${book.id}`, JSON.stringify({
+            index: book.durChapterIndex,
+            pos: book.durChapterPos
+        }));
     }
 
-    bookCompare(book: Book, oldV: Book): void {
-
+    bookDelete(book: Book, onlySource?: boolean): void {
+        if (!onlySource) {
+            this.del(`p_${book.id}`);
+        }
+        this.del(`c_${book.id}`);
+        this.getByHead(`a_${book.id}`).forEach(v => this.del(v));
     }
 
-    bookDelete(book: Book): void {
-
+    del(key: string): void {
+        localStorage.removeItem(key);
     }
 
     set(key: string, value: string, cb?: {success?: Function, fail?: Function}): void {
@@ -67,6 +78,10 @@ class Store {
             return decompress(store);
         }
         return null;
+    }
+
+    getByHead(head: string): string[] {
+        return Object.keys(localStorage).filter(v => v.indexOf('head') === 0);
     }
 
     checkUsage(): void {
@@ -105,7 +120,7 @@ class Store {
             }
             this.limit = base;
 
-            Object.keys(localStorage).filter(v => v.indexOf('_test') === 0).forEach(v => localStorage.removeItem(v));
+            this.getByHead('_test').forEach(v => this.del(v));
             
             this.set('limit', this.limit.toString());
 
