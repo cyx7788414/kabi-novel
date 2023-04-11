@@ -22,7 +22,7 @@ class Article {
 
 
         let func = () => {
-            this.currentBook = JSON.parse(window.Store.get('currentBook') || '""');
+            this.currentBook = window.BookShelf.bookMap[window.Store.get('current')];
             if (window.Router.current === 'article' && !this.currentBook) {
                 window.Router.go('bookshelf');
             }

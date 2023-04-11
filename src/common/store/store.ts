@@ -35,16 +35,6 @@ class Store {
         }
     }
 
-    bookInit(book: Book, onlySource?: boolean): void {
-        if (onlySource) {
-            return;
-        }
-        this.set(`p_${book.id}`, JSON.stringify({
-            index: book.durChapterIndex,
-            pos: book.durChapterPos
-        }));
-    }
-
     bookDelete(book: Book, onlySource?: boolean): void {
         if (!onlySource) {
             this.del(`p_${book.id}`);
@@ -55,6 +45,14 @@ class Store {
 
     del(key: string): void {
         localStorage.removeItem(key);
+    }
+
+    getObj(key: string): any | null {
+        return JSON.parse(this.get(key));        
+    }
+
+    setObj(key: string, value: any, cb?: {success?: Function, fail?: Function}): void {
+        this.set(key, JSON.stringify(value), cb);
     }
 
     set(key: string, value: string, cb?: {success?: Function, fail?: Function}): void {

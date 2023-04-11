@@ -39,13 +39,16 @@ interface Book {
     bookUrl: string;
     coverUrl: string;
     customCoverUrl: string;
-    durChapterIndex: string;
-    durChapterPos: string;
-    durChapterTime: string;
     durChapterTitle: string;
     latestChapterTime: string;
     latestChapterTitle: string;
 }
 
+interface Progress {
+    index: number;
+    pos: number;
+    time: number;
+}
 
-export { strToDom, makeDisplayText, getSpecialParent, getObject, Book };
+
+export { strToDom, makeDisplayText, getSpecialParent, getObject, Book, Progress };

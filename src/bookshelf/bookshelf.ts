@@ -1,5 +1,5 @@
 import Bar from '../common/bar/bar';
-import { Book, getObject, getSpecialParent } from '../common/common';
+import { Book, getObject, getSpecialParent, Progress } from '../common/common';
 import Pagination from '../common/pagination/pagination';
 
 class BookShelf {
@@ -25,8 +25,8 @@ class BookShelf {
             pagination: this.pagination
         });
 
-        // this.bookList = JSON.parse(window.Store.get('bookshelf') || '[]');
-        this.bookList = window.Store.getByHead('b_').map(v => JSON.parse(window.Store.get(v) || ''));//wait
+        this.bookList = window.Store.getObj('bookshelf') || [];
+        // this.bookList = window.Store.getByHead('b_').map(v => JSON.parse(window.Store.get(v) || ''));//wait
 
         window.Bind.bindView(this.element.querySelector('.book-list'), this, 'bookList', (bookList: Book[], oldV: Book[] = []) => {
             this.compareBookList(bookList, oldV);
@@ -72,23 +72,28 @@ class BookShelf {
         // }
     }
 
+    bookDelete(book: Book, onlySource?: boolean): void {
+        if (!onlySource) {
+            window.Store.del(`p_${book.id}`);
+        }
+        window.Store.del(`c_${book.id}`);
+        window.Store.getByHead(`a_${book.id}`).forEach(v => window.Store.del(v));
+    }
+
     compareBookList(newV: Book[], oldV: Book[]): void {
         let oldMap = this.bookMap;
         this.bookMap = {};
         newV.forEach(book => {
             this.bookMap[book.id] = book;
-            if (!oldMap[book.id]) {
-                window.Store.bookInit(book);
-            } else {
+            if (oldMap[book.id]) {
                 if (book.source !== oldMap[book.id].source) {
-                    window.Store.bookDelete(oldMap[book.id], true);
-                    window.Store.bookInit(book, true);
+                    this.bookDelete(oldMap[book.id], true);
                 }
                 delete oldMap[book.id];
             }
         });
         Object.keys(oldMap).forEach((id: string) => {
-            window.Store.bookDelete(oldMap[id]);
+            this.bookDelete(oldMap[id]);
         });
     }
 
@@ -102,18 +107,28 @@ class BookShelf {
             success: (res: any) => {
                 this.loading = false;
                 let bookList: Book[] = res.data.map((book: any) => {
-                    let keys: string[] = ['name', 'author', 'coverUrl', 'customCoverUrl', 'durChapterIndex', 'durChapterPos', 'durChapterTime', 'durChapterTitle', 'latestChapterTime', 'latestChapterTitle'];
+                    let id = window.Store.compress(`${book.name}_${book.author}`);
+                    let keys: string[] = ['name', 'author', 'coverUrl', 'customCoverUrl', 'durChapterTitle', 'latestChapterTime', 'latestChapterTitle'];
+                    let pobj: Progress = getObject(book, [], {
+                        index: book.durChapterIndex,
+                        pos: book.durChapterPos,
+                        time: new Date(book.durChapterTime).getTime()
+                    });
+                    let old = window.Store.getObj(`p_${id}`);
+                    if (!old || old.time < pobj.time) {
+                        window.Store.setObj(`p_${id}`, pobj);
+                    }
                     return getObject(book, keys, {
                         // id: window.Store.compress(`${book.name}~!@#$%^&*${book.author}`),
-                        id: window.Store.compress(`${book.name}_${book.author}`),
+                        id: id,
                         source: window.Store.compress(book.bookUrl)
                     });
                 });
                 this.bookList = [].concat(bookList);
-                // window.Store.set('bookshelf', JSON.stringify(this.bookList));
-                this.bookList.forEach(book => {
-                    window.Store.set(`b_${book.id}`, JSON.stringify(book));
-                });
+                window.Store.setObj('bookshelf', this.bookList);
+                // this.bookList.forEach(book => {
+                //     window.Store.set(`b_${book.id}`, JSON.stringify(book));
+                // });
 
                 //book key _  source _ catalogue _ article
 

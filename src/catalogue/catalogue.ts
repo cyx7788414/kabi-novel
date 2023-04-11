@@ -1,4 +1,5 @@
 import Bar from "../common/bar/bar";
+import { Book, Progress } from "../common/common";
 import Pagination from "../common/pagination/pagination";
 
 class Catalogue {
@@ -6,7 +7,10 @@ class Catalogue {
     bar: Bar;
     pagination: Pagination;
 
-    currentBook: any;
+    currentBook: Book;
+    progress: Progress;
+
+    linePerPage: number;
 
     list: any[] = [];
 
@@ -26,33 +30,37 @@ class Catalogue {
 
         window.Bind.bindView(this.element.querySelector('.article-list'), this, 'list', (list: any[]) => {
             let height = (this.element.querySelector('.pagination-box') as HTMLElement).offsetHeight;
-            let line = height / Math.round(height / 80);
+            this.linePerPage = Math.round(height / 80);
+            let line = height / this.linePerPage;
             let html = `
                 <style>
                     .article-item {line-height: ${line}px;}
                 </style>
             `;
-            list.forEach(article => {
+            list.forEach((article, index) => {
                 html += `
-                    <div class="article-item" key="${article.index}">${article.title}</div>
+                    <div class="article-item " key="${article.index}">${article.title}</div>
                 `;
             });
             window.setTimeout(() => {
+                this.checkCurrent();
                 this.pagination.checkPage();
             });
             return html;
         });
 
         let func = () => {
-            this.currentBook = JSON.parse(window.Store.get('currentBook') || '""');
+            this.currentBook = window.BookShelf.bookMap[window.Store.get('current')];
 
             if (window.Router.current === 'article' && !this.currentBook) {
                 window.Router.go('bookshelf');
                 return;
             }
+            
+            this.progress = window.Store.getObj(`p_${this.currentBook.id}`);
 
-            this.list = JSON.parse(window.Store.get(`${this.currentBook.name}-${this.currentBook.author}-catalogue`) || '[]');
-
+            this.list = window.Store.getObj(`c_${this.currentBook.id}`) || [];
+            
             if (this.list.length === 0) {
                 this.getCatalogue();
             }
@@ -60,6 +68,13 @@ class Catalogue {
 
         window.Router.cbMap.catalogue = func;
         func();
+    }
+
+    checkCurrent(): void {
+        this.element.querySelector('.article-item.current')?.classList.remove('current');
+        this.element.querySelectorAll('.article-item')[this.progress.index]?.classList.add('current');
+
+        this.pagination.setPage(Math.floor(this.progress.index / (this.linePerPage * 2)));
     }
 
     getCatalogue(): void {
@@ -72,7 +87,7 @@ class Catalogue {
             success: (res: any) => {
                 this.loading = false;
                 this.list = res.data;
-                window.Store.set(`${this.currentBook.name}-${this.currentBook.author}-catalogue`, JSON.stringify(this.list));
+                window.Store.setObj(`c_${this.currentBook.id}`, this.list);
             },
             error: (err: any) => {
                 this.loading = false;
