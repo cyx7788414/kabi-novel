@@ -1,5 +1,5 @@
 import Bar from "../common/bar/bar";
-import { Book, Progress } from "../common/common";
+import { Book, changeValueWithNewObj, getSpecialParent, Progress } from "../common/common";
 import Pagination from "../common/pagination/pagination";
 
 class Catalogue {
@@ -49,6 +49,11 @@ class Catalogue {
             return html;
         });
 
+        window.Bind.bind(this, 'progress', (newV: any, oldV: any) => {
+            window.Store.setObj(`p_${this.currentBook.id}`, newV);
+        });
+
+
         let func = () => {
             this.currentBook = window.BookShelf.bookMap[window.Store.get('current')];
 
@@ -71,8 +76,20 @@ class Catalogue {
     }
 
     checkCurrent(): void {
+        if (!this.progress || !this.currentBook) {
+            return;
+        }
         this.element.querySelector('.article-item.current')?.classList.remove('current');
-        this.element.querySelectorAll('.article-item')[this.progress.index]?.classList.add('current');
+        this.element.querySelector(`.article-item[key="${this.progress.index}"]`)?.classList.add('current');
+
+        let items = this.element.querySelectorAll('.article-item');
+        let caches = window.Store.getByHead(`a_${this.currentBook.id}_`).map(v => {
+            let arr = v.split('_');
+            return arr[arr.length - 1];
+        });
+        caches.forEach((index) => {
+            items[parseInt(index)]?.classList.add('cached');
+        });
 
         this.pagination.setPage(Math.floor(this.progress.index / (this.linePerPage * 2)));
     }
@@ -83,7 +100,7 @@ class Catalogue {
             return;
         }
         this.loading = true;
-        window.Api.getCatalogue(this.currentBook.bookUrl, {
+        window.Api.getCatalogue(this.currentBook.source, {
             success: (res: any) => {
                 this.loading = false;
                 this.list = res.data;
@@ -96,7 +113,15 @@ class Catalogue {
     }
 
     clickItem(event: Event): void {
-        console.log(event);
+        // console.log(event);
+        let item = getSpecialParent((event.target || event.srcElement) as HTMLElement, (ele: HTMLElement) => {
+            return ele.classList.contains('article-item');
+        });
+        let index = parseInt(item.getAttribute('key'));
+        changeValueWithNewObj(this.progress, 'index', index);
+        window.setTimeout(() => {
+            window.Router.go('article');
+        });
     }
 };
 

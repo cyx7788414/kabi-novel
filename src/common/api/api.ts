@@ -18,6 +18,19 @@ class Api {
         this.url = window.Store.get('url') || '';
     }
 
+    getArticle(url: string, index: number, cb?: {success?: Function, error?: Function}): void {
+        this.get(this.url + this.apiMap.article, {url: url, index: index}, {
+            success: (data: any) => {
+                cb && cb.success && cb.success(data);
+            },
+            error: (err: any) => {
+                console.log(err);
+                cb && cb.error && cb.error(err);
+                window.Message.add({content: '获取章节内容失败'});
+            }
+        });
+    }
+
     getCatalogue(url: string, cb?: {success?: Function, error?: Function}): void {
         this.get(this.url + this.apiMap.catalogue, {url: url}, {
             success: (data: any) => {

@@ -45,6 +45,7 @@ class Store {
 
     del(key: string): void {
         localStorage.removeItem(key);
+        this.checkUsage();
     }
 
     getObj(key: string): any | null {
@@ -79,7 +80,7 @@ class Store {
     }
 
     getByHead(head: string): string[] {
-        return Object.keys(localStorage).filter(v => v.indexOf('head') === 0);
+        return Object.keys(localStorage).filter(v => v.indexOf(head) === 0);
     }
 
     checkUsage(): void {
@@ -118,7 +119,9 @@ class Store {
             }
             this.limit = base;
 
-            this.getByHead('_test').forEach(v => this.del(v));
+            this.getByHead('_test').forEach(v => {
+                this.del(v)
+            });
             
             this.set('limit', this.limit.toString());
 

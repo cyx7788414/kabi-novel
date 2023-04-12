@@ -31,6 +31,12 @@ function getObject(source: any, keys: string[], others?: {[key: string]: any}): 
     return obj;
 }
 
+function changeValueWithNewObj(obj: any, attr: string, value: any): any {
+    let result = JSON.parse(JSON.stringify(obj));
+    result[attr] = value;
+    return result;
+}
+
 interface Book {
     id: string;
     source: string;
@@ -51,4 +57,4 @@ interface Progress {
 }
 
 
-export { strToDom, makeDisplayText, getSpecialParent, getObject, Book, Progress };
+export { strToDom, makeDisplayText, getSpecialParent, getObject, changeValueWithNewObj, Book, Progress };

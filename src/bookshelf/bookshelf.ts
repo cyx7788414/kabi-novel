@@ -121,7 +121,8 @@ class BookShelf {
                     return getObject(book, keys, {
                         // id: window.Store.compress(`${book.name}~!@#$%^&*${book.author}`),
                         id: id,
-                        source: window.Store.compress(book.bookUrl)
+                        // source: window.Store.compress(book.bookUrl)
+                        source: book.bookUrl
                     });
                 });
                 this.bookList = [].concat(bookList);
