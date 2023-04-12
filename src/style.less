@@ -97,6 +97,16 @@ html, body {
             text-overflow: ellipsis;
             overflow: hidden;
             vertical-align: middle;
+            color: #ccc;
+
+            &.current {
+                color: #fff;
+                background-color: #000;
+            }
+
+            &.cached {
+                color: #000;
+            }
         }
     }
 }
