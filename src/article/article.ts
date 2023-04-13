@@ -1,5 +1,6 @@
+import Catalogue from "../catalogue/catalogue";
 import Bar from "../common/bar/bar";
-import { Book, Progress } from "../common/common";
+import { Book, CatalogueItem, Progress } from "../common/common";
 import Pagination from "../common/pagination/pagination";
 
 class Article {
@@ -10,6 +11,8 @@ class Article {
     currentBook: Book;
 
     progress: Progress;
+
+    catalogue: CatalogueItem[] = [];
 
     content: string;
 
@@ -52,17 +55,51 @@ class Article {
         window.Bind.bind(this, 'progress', (newV: any, oldV: any) => {
             window.Store.setObj(`p_${this.currentBook.id}`, newV);
         });
+
+        const current: HTMLElement = this.element.querySelector('.current-info');
+        const changeInfo = () => {
+            return `${this.currentBook?.name} - ${this.currentBook?.author} - ${this.catalogue[this.progress?.index]?.title}`;
+        };
+        window.Bind.bindView(current, this, 'currentBook', changeInfo);
+        window.Bind.bindView(current, this, 'progress', changeInfo);
+        window.Bind.bindView(current, this, 'catalogue', changeInfo);
         
-        let content: HTMLElement = this.element.querySelector('.content-inner');
-        window.Bind.bindStyle(content, window.Layout, 'fontSize', 'fontSize', (v: any) => `${v}px`);
-        window.Bind.bindStyle(content, window.Layout, 'lineHeight', 'lineHeight', (v: any) => `${v}px`);
+        let content: HTMLElement = this.element.querySelector('.content');
+        let contentInner: HTMLElement = content.querySelector('.content-inner');
+        window.Bind.bindStyle(contentInner, window.Layout, 'fontSize', 'fontSize', (v: any) => `${v}px`);
+        window.Bind.bindStyle(contentInner, window.Layout, 'lineHeight', 'lineHeight', (v: any) => `${v}px`);
+        window.Bind.bindStyle(content, window.Layout, 'lineHeight', 'height', (v: any) => {
+            if (!this.element.offsetHeight) {
+                return '';
+            }
+            let base = this.element.offsetHeight - 230 - 20;
+            let oo = base % window.Layout.lineHeight;
+            if (oo < 10) {
+                oo += window.Layout.lineHeight;
+            }
+            let height = base - oo + 20;
+            current.style.height = `${oo}px`;
+            current.style.lineHeight = `${oo}px`;
+            window.setTimeout(() => this.pagination.checkPage());
+            return `${height}px`;
+        });
 
         let func = () => {
-            this.currentBook = window.BookShelf.bookMap[window.Store.get('current')];
-            if (window.Router.current === 'article' && !this.currentBook) {
-                window.Router.go('bookshelf');
+            let current = window.Store.get('current');
+            this.currentBook = window.BookShelf.bookMap[current];
+            if (!this.currentBook) {
+                if (window.Router.current === 'article') {
+                    window.Router.go('bookshelf');
+                }
                 return;
             }
+
+            // let base = this.element.offsetHeight - 230 - 20;
+            // let height = base - base % window.Layout.lineHeight + 20;
+            // console.log(v, height);
+            window.Layout.lineHeight = window.Layout.lineHeight;
+
+            this.catalogue = window.Store.getObj(`c_${current}`) || [];
 
             this.progress = window.Store.getObj(`p_${this.currentBook.id}`);
 

@@ -47,6 +47,12 @@ html, body {
         @import url(common/pagination/pagination.less);
     }
 
+    .current-info {
+        height: 20px;
+        padding: 0 20px;
+        line-height: 20px;
+    }
+
     @import url(common/bar/bar.less);
 
 
@@ -97,15 +103,17 @@ html, body {
             text-overflow: ellipsis;
             overflow: hidden;
             vertical-align: middle;
-            color: #ccc;
+            color: #999;
+            padding: 0 10px;
 
             &.current {
-                color: #fff;
+                color: #fff !important;
                 background-color: #000;
             }
 
             &.cached {
                 color: #000;
+                font-weight: bold;
             }
         }
     }

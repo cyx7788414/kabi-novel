@@ -1,5 +1,5 @@
 import Bar from "../common/bar/bar";
-import { Book, changeValueWithNewObj, getSpecialParent, Progress } from "../common/common";
+import { Book, CatalogueItem, changeValueWithNewObj, getSpecialParent, Progress } from "../common/common";
 import Pagination from "../common/pagination/pagination";
 
 class Catalogue {
@@ -12,7 +12,7 @@ class Catalogue {
 
     linePerPage: number;
 
-    list: any[] = [];
+    list: CatalogueItem[] = [];
 
     loading: boolean = false;
 
@@ -28,13 +28,24 @@ class Catalogue {
             pagination: this.pagination
         });
 
+        const current: HTMLElement = this.element.querySelector('.current-info');
+        const content: HTMLElement = this.element.querySelector('.content');
         window.Bind.bindView(this.element.querySelector('.article-list'), this, 'list', (list: any[]) => {
-            let height = (this.element.querySelector('.pagination-box') as HTMLElement).offsetHeight;
-            this.linePerPage = Math.round(height / 80);
-            let line = height / this.linePerPage;
+            // let height = (this.element.querySelector('.pagination-box') as HTMLElement).offsetHeight;
+            let height = this.element.offsetHeight - 230 - 20;
+            let oo = height % 80;
+            if (oo < 10) {
+                oo += 80;
+            }
+            this.linePerPage = Math.round((height - oo) / 80);
+            current.style.height = `${oo}px`;
+            current.style.lineHeight = `${oo}px`;
+            content.style.height = `${height - oo + 20}px`;
+            // this.linePerPage = Math.round(height / 80);
+            // let line = height / this.linePerPage;
             let html = `
                 <style>
-                    .article-item {line-height: ${line}px;}
+                    .article-item {line-height: 80px;}
                 </style>
             `;
             list.forEach((article, index) => {
@@ -43,10 +54,14 @@ class Catalogue {
                 `;
             });
             window.setTimeout(() => {
-                this.checkCurrent();
                 this.pagination.checkPage();
+                this.checkCurrent();
             });
             return html;
+        });
+
+        window.Bind.bindView(current, this, 'currentBook', () => {
+            return `${this.currentBook?.name} - ${this.currentBook?.author}`;
         });
 
         window.Bind.bind(this, 'progress', (newV: any, oldV: any) => {
@@ -57,8 +72,10 @@ class Catalogue {
         let func = () => {
             this.currentBook = window.BookShelf.bookMap[window.Store.get('current')];
 
-            if (window.Router.current === 'article' && !this.currentBook) {
-                window.Router.go('bookshelf');
+            if (!this.currentBook) {
+                if (window.Router.current === 'catalogue') {
+                    window.Router.go('bookshelf');
+                }
                 return;
             }
             
@@ -90,7 +107,6 @@ class Catalogue {
         caches.forEach((index) => {
             items[parseInt(index)]?.classList.add('cached');
         });
-
         this.pagination.setPage(Math.floor(this.progress.index / (this.linePerPage * 2)));
     }
 
@@ -103,7 +119,12 @@ class Catalogue {
         window.Api.getCatalogue(this.currentBook.source, {
             success: (res: any) => {
                 this.loading = false;
-                this.list = res.data;
+                this.list = res.data.map((v: any) => {
+                    return {
+                        index: v.index,
+                        title: v.title     
+                    };
+                });
                 window.Store.setObj(`c_${this.currentBook.id}`, this.list);
             },
             error: (err: any) => {
@@ -118,7 +139,7 @@ class Catalogue {
             return ele.classList.contains('article-item');
         });
         let index = parseInt(item.getAttribute('key'));
-        changeValueWithNewObj(this.progress, 'index', index);
+        changeValueWithNewObj(this.progress, {index: index, title: this.list[index].title, time: new Date().getTime(), pos: 0});
         window.setTimeout(() => {
             window.Router.go('article');
         });

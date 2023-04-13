@@ -13,6 +13,8 @@ class BookShelf {
 
     loading: boolean = false;
 
+    pageHeight: number;
+
     constructor() {
         this.element = document.querySelector('.page.bookshelf');
         
@@ -42,6 +44,7 @@ class BookShelf {
             `;
             bookList.forEach(book => {
                 let date = new Date(book.latestChapterTime);
+                let progress: Progress = window.Store.getObj(`p_${book.id}`);
                 html += `
                     <div class="book-item" key="${book.id}">
                         <div class="book-cover" style="background-image: url(${book.customCoverUrl});">
@@ -50,7 +53,7 @@ class BookShelf {
                         <div class="book-info">
                             <div class="book-name">${book.name}</div>
                             <div class="book-author">${book.author}</div>
-                            <div class="book-dur">${book.durChapterTitle}</div>
+                            <div class="book-dur">${progress.title}</div>
                             <div class="book-latest">${book.latestChapterTitle}</div>
                             <div class="book-latest-time">更新时间：${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()}</div>
                         </div>
@@ -67,9 +70,6 @@ class BookShelf {
             this.bookList = [].concat(this.bookList);
         };
 
-        // if (this.bookList.length === 0) {
-        //     this.getBookShelf();
-        // }
     }
 
     bookDelete(book: Book, onlySource?: boolean): void {
@@ -108,38 +108,27 @@ class BookShelf {
                 this.loading = false;
                 let bookList: Book[] = res.data.map((book: any) => {
                     let id = window.Store.compress(`${book.name}_${book.author}`);
-                    let keys: string[] = ['name', 'author', 'coverUrl', 'customCoverUrl', 'durChapterTitle', 'latestChapterTime', 'latestChapterTitle'];
+                    let keys: string[] = ['name', 'author', 'coverUrl', 'customCoverUrl', 'latestChapterTime', 'latestChapterTitle'];
                     let pobj: Progress = getObject(book, [], {
                         index: book.durChapterIndex,
                         pos: book.durChapterPos,
-                        time: new Date(book.durChapterTime).getTime()
+                        time: new Date(book.durChapterTime).getTime(),
+                        title: book.durChapterTitle
                     });
                     let old = window.Store.getObj(`p_${id}`);
                     if (!old || old.time < pobj.time) {
                         window.Store.setObj(`p_${id}`, pobj);
                     }
                     return getObject(book, keys, {
-                        // id: window.Store.compress(`${book.name}~!@#$%^&*${book.author}`),
                         id: id,
-                        // source: window.Store.compress(book.bookUrl)
                         source: book.bookUrl
                     });
                 });
                 this.bookList = [].concat(bookList);
                 window.Store.setObj('bookshelf', this.bookList);
-                // this.bookList.forEach(book => {
-                //     window.Store.set(`b_${book.id}`, JSON.stringify(book));
-                // });
-
-                //book key _  source _ catalogue _ article
-
-                //make book during store
-
-                //clear old book store
             },
             error: (err: any) => {
                 this.loading = false;
-                // this.bookList = [];
             }
         });
     }
