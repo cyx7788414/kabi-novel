@@ -134,15 +134,52 @@ class Catalogue {
     }
 
     clickItem(event: Event): void {
-        // console.log(event);
         let item = getSpecialParent((event.target || event.srcElement) as HTMLElement, (ele: HTMLElement) => {
             return ele.classList.contains('article-item');
         });
         let index = parseInt(item.getAttribute('key'));
-        changeValueWithNewObj(this.progress, {index: index, title: this.list[index].title, time: new Date().getTime(), pos: 0});
+        this.progress = changeValueWithNewObj(this.progress, {index: index, title: this.list[index].title, time: new Date().getTime(), pos: 0});
         window.setTimeout(() => {
             window.Router.go('article');
         });
+    }
+
+    getCacheItem(): void {
+
+    }
+
+    doCache(val: number | 'end' | 'all'): void {
+        let current = this.progress.index;
+        let last = this.list[this.list.length].index;
+
+    }
+
+    deleteCache(): void {
+
+    }
+
+    cache(): void {
+        window.Modal.add({
+            content: `
+                <style>
+                    .modal-content .button {
+                        line-height: 60px;
+                        padding: 20px;
+                        width: 40%;
+                        float: left;
+                        margin: 10px;
+                    }
+                </style>
+                <div class="button" onclick="Catalogue.doCache(20)">缓存20章</div>
+                <div class="button" onclick="Catalogue.doCache(50)">缓存50章</div>
+                <div class="button" onclick="Catalogue.doCache(100)">缓存100章</div>
+                <div class="button" onclick="Catalogue.doCache(200)">缓存200章</div>
+                <div class="button" onclick="Catalogue.doCache('end')">缓存未读</div>
+                <div class="button" onclick="Catalogue.doCache('all')">缓存全文</div>
+                <div class="button" onclick="Catalogue.deleteCache('readed')">删除已读</div>
+                <div class="button" onclick="Catalogue.deleteCache('all')">删除全部</div>
+            `,
+        })
     }
 };
 

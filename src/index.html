@@ -44,11 +44,11 @@
             <div class="left-box">
                 <div class="button" onclick="Router.go('bookshelf')">书架</div>
                 <div class="button" onclick="Router.go('catalogue')">目录</div>
-                <div class="button">刷新</div>
+                <div class="button" onclick="Article.getArticle()">刷新</div>
             </div>
             <div class="right-box">
-                <div class="button" onclick="Article.pagination.pageChange(-1)">&lt;</div>
-                <div class="button" onclick="Article.pagination.pageChange(1)">&gt;</div>
+                <div class="button" onclick="Article.pageChange(-1)">&lt;</div>
+                <div class="button" onclick="Article.pageChange(1)">&gt;</div>
             </div>
         </div>
     </div>
@@ -63,6 +63,7 @@
                 <div class="button" onclick="Router.go('bookshelf')">书架</div>
                 <div class="button" onclick="Router.go('article')">文章</div>
                 <div class="button" onclick="Catalogue.getCatalogue()">刷新</div>
+                <div class="button" onclick="Catalogue.cache()">缓存</div>
             </div>
             <div class="right-box">
                 <div class="button" onclick="Catalogue.pagination.pageChange(-1)">&lt;</div>

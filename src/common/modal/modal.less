@@ -2,17 +2,24 @@
     position: absolute;
     min-width: 600px;
     min-height: 600px;
-    left: 50%;
-    top: 50%;
-    margin-left: -300px;
-    margin-top: -300px;
+    left: 50px;
+    right: 50px;
+    top: 40%;
+    // margin-left: -300px;
+    margin-top: -400px;
     border: 1px solid #ccc;
     background-color: #fff;
 
     .modal-content {
-        height: 500px;
+        min-height: 500px;
         padding: 10px;
         word-break: break-all;
+        font-size: 20px;
+        line-height: 40px;
+
+        * {
+            word-break: break-all;
+        }
     }
     .modal-footer {
         height: 100px;
