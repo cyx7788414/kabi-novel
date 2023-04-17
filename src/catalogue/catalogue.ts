@@ -16,6 +16,8 @@ class Catalogue {
 
     loading: boolean = false;
 
+    cacheFlag: boolean = false;
+
     constructor() {
         this.element = document.querySelector('.page.catalogue');
 
@@ -144,18 +146,66 @@ class Catalogue {
         });
     }
 
-    getCacheItem(): void {
-
+    makeCache(start: number, end: number): void {
+        if (start > end) {
+            this.cacheFlag = false;
+            window.Message.add({
+                content: '缓存任务完成'
+            });
+            return;
+        }
+        if (window.Store.has(`a_${this.currentBook.id}_${start}`)) {
+            this.makeCache(start + 1, end);
+            return;
+        }
+        window.Api.getArticle(this.currentBook.source, start, {
+            success: (res: any) => {
+                window.Store.set(`a_${this.currentBook.id}_${start}`, res.data);
+                this.element.querySelector(`.article-item[key="${start}"]`)?.classList.add('cached');
+                this.makeCache(start + 1, end);
+            },
+            error: (err: any) => {
+                window.Message.add({
+                    content: `缓存章节《${this.list[start].title}》失败`
+                });
+                this.makeCache(start + 1, end);
+            }
+        });
     }
 
     doCache(val: number | 'end' | 'all'): void {
-        let current = this.progress.index;
-        let last = this.list[this.list.length].index;
-
+        if (this.cacheFlag) {
+            window.Message.add({
+                content: '正在缓存，请勿重复操作'
+            });
+            return;
+        }
+        this.cacheFlag = true;
+        let start = this.progress.index;
+        let last = this.list[this.list.length - 1].index;
+        if (val === 'all') {
+            start = 0;
+        }
+        if (typeof val === 'number') {
+            last = Math.min(last, start + val);
+        }
+        this.makeCache(start, last);
     }
 
-    deleteCache(): void {
-
+    deleteCache(type: 'readed' | 'all'): void {
+        if (this.cacheFlag) {
+            window.Message.add({
+                content: '正在缓存，禁用删除操作'
+            });
+            return;
+        }
+        window.Store.getByHead(`a_${this.currentBook.id}_`).filter(v => !(type === 'readed' && parseInt(v.split('_')[2]) >= this.progress.index)).forEach(v => {
+            window.Store.del(v);
+            this.element.querySelector(`.article-item[key="${v.split('_')[2]}"]`)?.classList.remove('cached');
+        });
+        window.Message.add({
+            content: '删除指定缓存完成'
+        });
     }
 
     cache(): void {

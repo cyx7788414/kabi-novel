@@ -18,6 +18,7 @@ class Config {
 
         window.Bind.bindView(this.element.querySelector('.store-usage'), window.Store, 'usage');
         window.Bind.bindView(this.element.querySelector('.store-total'), window.Store, 'limit');
+        window.Bind.bindView(this.element.querySelector('.store-percent'), window.Store, 'percent', (v: number) => `  ( ${v}% )`);
 
         window.Bind.bindView(this.element.querySelector('.font-size'), window.Layout, 'fontSize');
         window.Bind.bindView(this.element.querySelector('.line-height'), window.Layout, 'lineHeight');

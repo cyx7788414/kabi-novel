@@ -66,7 +66,7 @@ class Article {
 
         const current: HTMLElement = this.element.querySelector('.current-info');
         const changeInfo = () => {
-            return `${this.currentBook?.name} - ${this.currentBook?.author} - ${this.catalogue[this.progress?.index]?.title}`;
+            return `${this.currentBook?.name} - ${this.currentBook?.author} - ${this.progress?.title}`;
         };
         window.Bind.bindView(current, this, 'currentBook', changeInfo);
         window.Bind.bindView(current, this, 'progress', changeInfo);

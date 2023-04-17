@@ -16,6 +16,8 @@ class Store {
 
     usage: number = 0;
 
+    percent: number = 0;
+
     compress: Function = compress;
     decompress: Function = decompress;
 
@@ -46,6 +48,10 @@ class Store {
     del(key: string): void {
         localStorage.removeItem(key);
         this.checkUsage();
+    }
+
+    has(key: string): boolean {
+        return localStorage.hasOwnProperty(key);
     }
 
     getObj(key: string): any | null {
@@ -89,6 +95,12 @@ class Store {
         }
         this.checkFlag = window.setTimeout(() => {
             this.usage = Object.keys(localStorage).map(v => v + localStorage.getItem(v)).join('').length;
+            this.percent = Math.round(this.usage / (this.limit || 1) * 100);
+            if (this.percent > 95) {
+                window.Message.add({
+                    content: `缓存已使用${this.percent}%，请注意`
+                });
+            }
         }, 500);
     }
 
