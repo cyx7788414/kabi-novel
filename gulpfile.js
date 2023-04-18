@@ -25,7 +25,7 @@ function buildLess(cb) {
 }
 
 function buildTs(cb) {
-    return browserify({
+    let a = browserify({
         basedir: '.',
         debug: debug,
         entries: ['src/main.ts'],
@@ -35,9 +35,12 @@ function buildTs(cb) {
         .plugin(tsify)
         .bundle()
         .pipe(source('bundle.js'))
-        .pipe(buffer())
-        .pipe(uglify())
-        .pipe(dest("temp"));
+        .pipe(buffer());
+    if (!debug) {
+        a = a.pipe(uglify());
+    }
+        // .pipe(uglify())
+    return a.pipe(dest("temp"));
 }
 
 function collect(cb) {

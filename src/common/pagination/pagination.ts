@@ -11,11 +11,17 @@ class Pagination {
 
     pagePadding: number = 0;
 
+    fakePage: boolean = false;
+
     constructor(config: {
-        root: HTMLElement        
+        root: HTMLElement,
+        fake?: boolean     
+        pageChange?: Function    
     }) {
         this.root = config.root;
         this.handleHtml(config.root);
+
+        this.fakePage = config.fake || false;
 
         this.pageStep = this.box.offsetHeight;
 
@@ -23,6 +29,10 @@ class Pagination {
         
         window.Bind.bindStyle(this.padding, this, 'pagePadding', 'height', (v: any) => `${v}px`);
         window.Bind.bind(this, 'pageIndex', (value: number) => {
+            if (this.fakePage) {
+                config?.pageChange(value);
+                return;
+            }
             this.box.scrollTop = this.pageStep * value;
         });
     }  
@@ -42,8 +52,13 @@ class Pagination {
         this.padding = root.querySelector('.pagination-padding');
     }
 
-    checkPage(): void {
+    checkPage(limit?: number): void {
         this.pageStep = this.box.offsetHeight;
+        if (this.fakePage) {
+            this.pageLimit = limit || 1;
+            this.pagePadding = 0;
+            return;
+        }
         this.pageLimit = Math.ceil(this.box.scrollHeight / this.pageStep) || 1;
         this.pagePadding = this.pageStep * this.pageLimit - this.box.scrollHeight;
     }

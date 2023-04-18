@@ -40,10 +40,10 @@ function init() {
     window.Config = new Config();
 
     window.BookShelf = new BookShelf();
-
-    window.Article = new Article();
     
     window.Catalogue = new Catalogue();
+
+    window.Article = new Article();
 
 }
 

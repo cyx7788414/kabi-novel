@@ -95,7 +95,7 @@ class Store {
         }
         this.checkFlag = window.setTimeout(() => {
             this.usage = Object.keys(localStorage).map(v => v + localStorage.getItem(v)).join('').length;
-            this.percent = Math.round(this.usage / (this.limit || 1) * 100);
+            this.percent = this.limit?Math.round(this.usage / (this.limit) * 100):0;
             if (this.percent > 95) {
                 window.Message.add({
                     content: `缓存已使用${this.percent}%，请注意`

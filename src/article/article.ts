@@ -117,9 +117,15 @@ class Article {
 
     getContent(): void {
         this.content = window.Store.get(`a_${this.currentBook.id}_${this.progress.index}`) || '';
-            
+        let cb = () => {
+            window.setTimeout(() => {
+                window.Catalogue?.doCache(5);
+            });
+        };
         if (!this.content) {
-            this.getArticle();
+            this.getArticle(cb);
+        } else {
+            cb();
         }
     }
 
@@ -161,9 +167,9 @@ class Article {
         }
     }
 
-    getArticle(): void {
+    getArticle(cb?: Function): void {
         if (this.loading === true) {
-            window.Message.add({content: '正在加载书架数据'});
+            window.Message.add({content: '正在加载章节内容'});
             return;
         }
         this.loading = true;
@@ -172,6 +178,7 @@ class Article {
                 this.loading = false;
                 this.content = res.data;
                 window.Store.set(`a_${this.currentBook.id}_${this.progress.index}`, this.content);
+                cb && cb();
             },
             error: (err: any) => {
                 this.loading = false;

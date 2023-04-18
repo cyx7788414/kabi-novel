@@ -13,6 +13,9 @@ class Catalogue {
     linePerPage: number;
 
     list: CatalogueItem[] = [];
+    pageList: CatalogueItem[] = [];
+
+    oo: number = 10;
 
     loading: boolean = false;
 
@@ -22,7 +25,12 @@ class Catalogue {
         this.element = document.querySelector('.page.catalogue');
 
         this.pagination = new Pagination({
-            root: this.element.querySelector('.content')
+            root: this.element.querySelector('.content'),
+            fake: true,
+            pageChange: (index: number) => {
+                let start = index * this.linePerPage;
+                this.pageList = this.list.slice(start, start + this.linePerPage);
+            }
         });
         
         this.bar = new Bar({
@@ -31,33 +39,25 @@ class Catalogue {
         });
 
         const current: HTMLElement = this.element.querySelector('.current-info');
-        const content: HTMLElement = this.element.querySelector('.content');
-        window.Bind.bindView(this.element.querySelector('.article-list'), this, 'list', (list: any[]) => {
-            // let height = (this.element.querySelector('.pagination-box') as HTMLElement).offsetHeight;
-            let height = this.element.offsetHeight - 230 - 20;
-            let oo = height % 80;
-            if (oo < 10) {
-                oo += 80;
+        window.Bind.bind(this, 'list', (list: CatalogueItem[]) => {
+            if (!this.linePerPage) {
+                return;
             }
-            this.linePerPage = Math.round((height - oo) / 80);
-            current.style.height = `${oo}px`;
-            current.style.lineHeight = `${oo}px`;
-            content.style.height = `${height - oo + 20}px`;
-            // this.linePerPage = Math.round(height / 80);
-            // let line = height / this.linePerPage;
+            this.pagination.checkPage(Math.ceil(list.length / this.linePerPage));
+            this.pagination.setPage(Math.floor(this.progress.index / this.linePerPage));
+        });
+        window.Bind.bindView(this.element.querySelector('.article-list'), this, 'pageList', (list: CatalogueItem[]) => {
             let html = `
                 <style>
                     .article-item {line-height: 80px;}
                 </style>
             `;
-            list.forEach((article, index) => {
+            list.forEach((article) => {
+                let current = article.index === this.progress.index?'current':'';
+                let cached = window.Store.has(`a_${this.currentBook.id}_${article.index}`)?'cached':'';
                 html += `
-                    <div class="article-item " key="${article.index}">${article.title}</div>
+                    <div class="article-item ${current} ${cached}" key="${article.index}">${article.title}</div>
                 `;
-            });
-            window.setTimeout(() => {
-                this.pagination.checkPage();
-                this.checkCurrent();
             });
             return html;
         });
@@ -80,6 +80,8 @@ class Catalogue {
                 }
                 return;
             }
+
+            this.checkHeight();
             
             this.progress = window.Store.getObj(`p_${this.currentBook.id}`);
 
@@ -94,27 +96,25 @@ class Catalogue {
         func();
     }
 
-    checkCurrent(): void {
-        if (!this.progress || !this.currentBook) {
-            return;
+    checkHeight(): void {
+        let height = this.element.offsetHeight - 230 - 20;
+        let oo = height % 80;
+        if (oo < 10) {
+            oo += 80;
         }
-        this.element.querySelector('.article-item.current')?.classList.remove('current');
-        this.element.querySelector(`.article-item[key="${this.progress.index}"]`)?.classList.add('current');
-
-        let items = this.element.querySelectorAll('.article-item');
-        let caches = window.Store.getByHead(`a_${this.currentBook.id}_`).map(v => {
-            let arr = v.split('_');
-            return arr[arr.length - 1];
-        });
-        caches.forEach((index) => {
-            items[parseInt(index)]?.classList.add('cached');
-        });
-        this.pagination.setPage(Math.floor(this.progress.index / (this.linePerPage * 2)));
+        this.oo = oo;
+        this.linePerPage = Math.round((height - oo) / 80) * 2;
+        const current: HTMLElement = this.element.querySelector('.current-info');
+        const content: HTMLElement = this.element.querySelector('.content');
+        current.style.height = `${oo}px`;
+        current.style.lineHeight = `${oo}px`;
+        content.style.height = `${height - oo + 20}px`;
     }
+
 
     getCatalogue(): void {
         if (this.loading === true) {
-            window.Message.add({content: '正在加载书架数据'});
+            window.Message.add({content: '正在加载目录数据'});
             return;
         }
         this.loading = true;
@@ -180,8 +180,11 @@ class Catalogue {
             });
             return;
         }
+        window.Modal.add({
+            content: '5'
+        });
         this.cacheFlag = true;
-        let start = this.progress.index;
+        let start = this.progress?.index || 0;
         let last = this.list[this.list.length - 1].index;
         if (val === 'all') {
             start = 0;
@@ -189,6 +192,9 @@ class Catalogue {
         if (typeof val === 'number') {
             last = Math.min(last, start + val);
         }
+        window.Modal.add({
+            content: '1'
+        });
         this.makeCache(start, last);
     }
 
