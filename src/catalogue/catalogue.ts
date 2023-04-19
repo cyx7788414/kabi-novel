@@ -72,28 +72,32 @@ class Catalogue {
 
 
         let func = () => {
-            this.currentBook = window.BookShelf.bookMap[window.Store.get('current')];
-
-            if (!this.currentBook) {
-                if (window.Router.current === 'catalogue') {
-                    window.Router.go('bookshelf');
-                }
-                return;
-            }
+            this.checkCurrent();
 
             this.checkHeight();
-            
-            this.progress = window.Store.getObj(`p_${this.currentBook.id}`);
-
-            this.list = window.Store.getObj(`c_${this.currentBook.id}`) || [];
-            
-            if (this.list.length === 0) {
-                this.getCatalogue();
-            }
         };
 
         window.Router.cbMap.catalogue = func;
         func();
+    }
+    
+    checkCurrent(): void {
+        this.currentBook = window.BookShelf.bookMap[window.Store.get('current')];
+
+        if (!this.currentBook) {
+            if (window.Router.current === 'catalogue') {
+                window.Router.go('bookshelf');
+            }
+            return;
+        }
+
+        this.progress = window.Store.getObj(`p_${this.currentBook.id}`);
+
+        this.list = window.Store.getObj(`c_${this.currentBook.id}`) || [];
+        
+        if (this.list.length === 0) {
+            this.getCatalogue();
+        }
     }
 
     checkHeight(): void {
@@ -180,21 +184,16 @@ class Catalogue {
             });
             return;
         }
-        window.Modal.add({
-            content: '5'
-        });
+        this.checkCurrent();
         this.cacheFlag = true;
-        let start = this.progress?.index || 0;
-        let last = this.list[this.list.length - 1].index;
+        let start = this.progress?.index;
+        let last = this.list[this.list.length - 1]?.index || 0;
         if (val === 'all') {
             start = 0;
         }
         if (typeof val === 'number') {
             last = Math.min(last, start + val);
         }
-        window.Modal.add({
-            content: '1'
-        });
         this.makeCache(start, last);
     }
 

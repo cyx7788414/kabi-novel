@@ -14,7 +14,7 @@ const rename = require('gulp-rename');
 let debug = false;
 
 function cleanDir(cb) {
-    return src(['dist/*', 'temp/*']).pipe(clean());
+    return src(debug?['temp/*']:['dist/*', 'temp/*']).pipe(clean());
 }
 
 function buildLess(cb) {
