@@ -80,7 +80,7 @@ class Article {
             if (!this.element.offsetHeight) {
                 return '';
             }
-            let base = this.element.offsetHeight - 230 - 20;
+            let base = this.element.offsetHeight - 110 - 20;
             let oo = base % window.Layout.lineHeight;
             if (oo < 10) {
                 oo += window.Layout.lineHeight;

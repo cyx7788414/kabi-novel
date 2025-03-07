@@ -101,7 +101,7 @@ class Catalogue {
     }
 
     checkHeight(): void {
-        let height = this.element.offsetHeight - 230 - 20;
+        let height = this.element.offsetHeight - 110 - 20;
         let oo = height % 80;
         if (oo < 10) {
             oo += 80;
@@ -218,7 +218,7 @@ class Catalogue {
             content: `
                 <style>
                     .modal-content .button {
-                        line-height: 60px;
+                        // line-height: 60px;
                         padding: 20px;
                         width: 40%;
                         float: left;

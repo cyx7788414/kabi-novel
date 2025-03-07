@@ -14,9 +14,9 @@ html, body {
     }
 
     .button {
-        min-width: 150px;
+        min-width: 80px;
         padding: 0 10px;
-        font-size: 60px;
+        font-size: 1.5rem;
         display: inline-block;
         border: 1px solid #333;
         text-align: center;
@@ -31,8 +31,8 @@ html, body {
     position: relative;
 
     @scrollHack: 40px;
-    @barHeight: 50px;
-    @controlHeight: 140px + @scrollHack;
+    @barHeight: 30px;
+    @controlHeight: 40px + @scrollHack;
 
     &.show {
         display: block;
@@ -74,7 +74,7 @@ html, body {
         }
 
         .button {
-            line-height: @controlHeight - 20px;
+            line-height: @controlHeight - 40px;
             height: 100%;
             margin: 0 10px;
         }

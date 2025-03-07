@@ -32,7 +32,7 @@ function init() {
     document.querySelector('.global-style').innerHTML = `
         <style>
             .page .content {
-                height: ${document.body.offsetHeight - 230}px;
+                height: ${document.body.offsetHeight - 110}px;
             }
         </style>
     `;
@@ -44,7 +44,6 @@ function init() {
     window.Catalogue = new Catalogue();
 
     window.Article = new Article();
-
 }
 
 window.init = init;
