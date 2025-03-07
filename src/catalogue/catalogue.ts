@@ -79,6 +79,10 @@ class Catalogue {
 
         window.Router.cbMap.catalogue = func;
         func();
+
+        // 增加 kindle oasis 按钮点击监听
+        const listener = this.handlePageUpDown.bind(this);
+        document.addEventListener('keydown', listener);
     }
     
     checkCurrent(): void {
@@ -235,6 +239,28 @@ class Catalogue {
                 <div class="button" onclick="Catalogue.deleteCache('all')">删除全部</div>
             `,
         })
+    }
+
+    handlePageUpDown(e: KeyboardEvent): void {
+        if (this.loading === true) {
+            window.Message.add({content: '正在加载章节内容'});
+            return;
+        }
+        if (!this.linePerPage) {
+            return;
+        }
+        if (!this.currentBook) {
+            return;
+        }
+        if (!this.pagination) {
+            return;
+        }
+
+        if (e.key === 'PageDown') {
+            this.pagination.pageChange(1);
+        } else if (e.key === 'PageUp') {
+            this.pagination.pageChange(-1);
+        }
     }
 };
 
