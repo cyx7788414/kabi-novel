@@ -45,11 +45,12 @@ class BookShelf {
             bookList.forEach(book => {
                 let date = new Date(book.latestChapterTime);
                 let progress: Progress = window.Store.getObj(`p_${book.id}`);
+                        // <div class="book-cover" style="background-image: url(${book.customCoverUrl});">
+                        //     <img src="${book.coverUrl}" alt="${book.name}"/>
+                        // </div>
                 html += `
                     <div class="book-item" key="${book.id}">
-                        <div class="book-cover" style="background-image: url(${book.customCoverUrl});">
-                            <img src="${book.coverUrl}" alt="${book.name}"/>
-                        </div>
+                        <div class="book-cover"></div>
                         <div class="book-info">
                             <div class="book-name">${book.name}</div>
                             <div class="book-author">${book.author}</div>
