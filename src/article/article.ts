@@ -80,7 +80,7 @@ class Article {
             if (!this.element.offsetHeight) {
                 return '';
             }
-            let base = this.element.offsetHeight - 230 - 20;
+            let base = this.element.offsetHeight - 110 - 20;
             let oo = base % window.Layout.lineHeight;
             if (oo < 10) {
                 oo += window.Layout.lineHeight;
@@ -113,6 +113,10 @@ class Article {
 
         window.Router.cbMap.article = func;
         func();
+
+        // 增加 kindle oasis 按钮点击监听
+        const listener = this.handlePageUpDown.bind(this)
+        document.addEventListener('keydown', listener);
     }
 
     getContent(): void {
@@ -184,6 +188,22 @@ class Article {
                 this.loading = false;
             }
         });
+    }
+
+    handlePageUpDown(e: KeyboardEvent): void {
+        if (this.loading === true) {
+            window.Message.add({content: '正在加载章节内容'});
+            return;
+        }
+        if (!this.currentBook) {
+            return;
+        }
+
+        if (e.key === 'PageDown') {
+            this.pageChange(1);
+        } else if (e.key === 'PageUp') {
+            this.pageChange(-1);
+        }
     }
 };
 
