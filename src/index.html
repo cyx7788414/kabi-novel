@@ -20,17 +20,21 @@
     <div class="global-style"></div>
     <div class="page bookshelf show">
         <div class="content">
-            <div class="book-list" onclick="BookShelf.clickItem(event)"></div>
+            <div class="book-list" onclick="BookShelf && BookShelf.clickItem && BookShelf.clickItem(event)"></div>
         </div>
         <div class="bar"></div>
         <div class="control">
             <div class="left-box">
                 <div class="button" onclick="Router.go('config')">配置</div>
-                <div class="button" onclick="BookShelf.getBookShelf()">刷新</div>
+                <div class="button" onclick="BookShelf && BookShelf.getBookShelf && BookShelf.getBookShelf()">刷新</div>
             </div>
             <div class="right-box">
-                <div class="button" onclick="BookShelf.pagination.pageChange(-1)">&lt;</div>
-                <div class="button" onclick="BookShelf.pagination.pageChange(1)">&gt;</div>
+                <div class="button"
+                    onclick="BookShelf && BookShelf.pagination && BookShelf.pagination.pageChange && BookShelf.pagination.pageChange(-1)">
+                    &lt;</div>
+                <div class="button"
+                    onclick="BookShelf && BookShelf.pagination && BookShelf.pagination.pageChange && BookShelf.pagination.pageChange(1)">
+                    &gt;</div>
             </div>
         </div>
     </div>
@@ -44,17 +48,17 @@
             <div class="left-box">
                 <div class="button" onclick="Router.go('bookshelf')">书架</div>
                 <div class="button" onclick="Router.go('catalogue')">目录</div>
-                <div class="button" onclick="Article.getArticle()">刷新</div>
+                <div class="button" onclick="Article && Article.getArticle && Article.getArticle()">刷新</div>
             </div>
             <div class="right-box">
-                <div class="button" onclick="Article.pageChange(-1)">&lt;</div>
-                <div class="button" onclick="Article.pageChange(1)">&gt;</div>
+                <div class="button" onclick="Article && Article.pageChange && Article.pageChange(-1)">&lt;</div>
+                <div class="button" onclick="Article && Article.pageChange && Article.pageChange(1)">&gt;</div>
             </div>
         </div>
     </div>
     <div class="page catalogue">
         <div class="content">
-            <div class="article-list" onclick="Catalogue.clickItem(event)"></div>
+            <div class="article-list" onclick="Catalogue && Catalogue.clickItem && Catalogue.clickItem(event)"></div>
         </div>
         <div class="current-info"></div>
         <div class="bar"></div>
@@ -62,12 +66,16 @@
             <div class="left-box">
                 <div class="button" onclick="Router.go('bookshelf')">书架</div>
                 <div class="button" onclick="Router.go('article')">文章</div>
-                <div class="button" onclick="Catalogue.getCatalogue()">刷新</div>
-                <div class="button" onclick="Catalogue.cache()">缓存</div>
+                <div class="button" onclick="Catalogue && Catalogue.getCatalogue && Catalogue.getCatalogue()">刷新</div>
+                <div class="button" onclick="Catalogue && Catalogue.cache && Catalogue.cache()">缓存</div>
             </div>
             <div class="right-box">
-                <div class="button" onclick="Catalogue.pagination.pageChange(-1)">&lt;</div>
-                <div class="button" onclick="Catalogue.pagination.pageChange(1)">&gt;</div>
+                <div class="button"
+                    onclick="Catalogue && Catalogue.pagination && Catalogue.pagination.pageChange && Catalogue.pagination.pageChange(-1)">
+                    &lt;</div>
+                <div class="button"
+                    onclick="Catalogue && Catalogue.pagination && Catalogue.pagination.pageChange && Catalogue.pagination.pageChange(1)">
+                    &gt;</div>
             </div>
         </div>
     </div>
@@ -76,8 +84,8 @@
             <div class="form-item url">
                 <div class="label">服务器地址</div>
                 <div class="text">
-                    <input type="text" placeholder="请输入阅读服务地址"/>
-                    <div class="button right" onclick="Config.checkUrl()">测试</div>
+                    <input type="text" placeholder="请输入阅读服务地址" />
+                    <div class="button right" onclick="Config && Config.checkUrl && Config.checkUrl()">测试</div>
                 </div>
             </div>
             <div class="form-item">
@@ -87,7 +95,7 @@
                     <span class="store-division">/</span>
                     <span class="store-total">-</span>
                     <span class="store-percent"></span>
-                    <div class="button right" onclick="Store.checkLimit()">检测</div>
+                    <div class="button right" onclick="Store && Store.checkLimit && Store.checkLimit()">检测</div>
                 </div>
             </div>
             <div class="form-item">
@@ -95,9 +103,9 @@
                 <div class="text">
                     <span class="font-size">16</span>
                     <span class="font-unit">px</span>
-                    <div class="button right" onclick="Layout.reset('fontSize')">重置</div>
-                    <div class="button right" onclick="Layout.add('fontSize', -1)">-</div>
-                    <div class="button right" onclick="Layout.add('fontSize', 1)">+</div>
+                    <div class="button right" onclick="Layout && Layout.reset && Layout.reset('fontSize')">重置</div>
+                    <div class="button right" onclick="Layout && Layout.add && Layout.add('fontSize', -1)">-</div>
+                    <div class="button right" onclick="Layout && Layout.add && Layout.add('fontSize', 1)">+</div>
                 </div>
             </div>
             <div class="form-item">
@@ -105,9 +113,9 @@
                 <div class="text">
                     <span class="line-height">20</span>
                     <span class="line-unit">px</span>
-                    <div class="button right" onclick="Layout.reset('lineHeight')">重置</div>
-                    <div class="button right" onclick="Layout.add('lineHeight', -1)">-</div>
-                    <div class="button right" onclick="Layout.add('lineHeight', 1)">+</div>
+                    <div class="button right" onclick="Layout && Layout.reset && Layout.reset('lineHeight')">重置</div>
+                    <div class="button right" onclick="Layout && Layout.add && Layout.add('lineHeight', -1)">-</div>
+                    <div class="button right" onclick="Layout && Layout.add && Layout.add('lineHeight', 1)">+</div>
                 </div>
             </div>
             <div class="form-item display">
