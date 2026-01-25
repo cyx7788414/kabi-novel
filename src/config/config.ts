@@ -1,4 +1,4 @@
-import {makeDisplayText} from '../common/common';
+import { makeDisplayText } from '../common/common';
 
 class Config {
     element: HTMLElement;
@@ -29,7 +29,7 @@ class Config {
         window.Bind.bindStyle(display, window.Layout, 'lineHeight', 'lineHeight', (v: any) => `${v}px`);
 
         if (!this.url) {
-            window.Message.add({content: '当前未配置服务器地址'});
+            window.Message.add({ content: '当前未配置服务器地址' });
         } else {
             this.checkUrl();
         }
@@ -37,6 +37,12 @@ class Config {
 
 
     checkUrl() {
+        // 检测是否为纯IP地址（IPv4格式）
+        const ipv4Regex = /^(\d{1,3}\.){3}\d{1,3}$/;
+        if (ipv4Regex.test(this.url.trim())) {
+            // 如果只输入了IP地址，自动补全为 http://ip:1122
+            this.url = `http://${this.url.trim()}:1122`;
+        }
         window.Api.checkUrl(this.url);
     }
 };
